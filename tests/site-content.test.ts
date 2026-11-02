@@ -46,6 +46,17 @@ describe("project-wide scans", () => {
       assert.ok(!/[\w.+-]+@[\w-]+\.[\w.]+/.test(text), `${f} contains an email address`);
     }
   });
+  it("has no pre-launch banner, top contact bar or banner text left", () => {
+    for (const { f, text } of all) {
+      assert.ok(!/Pre-launch preview|PreviewBanner|TopBar|preview-banner/i.test(text), `${f} still references the banner or top bar`);
+    }
+    assert.ok(!fs.existsSync(path.join(root, "src/components/PreviewBanner.tsx")));
+    assert.ok(!fs.existsSync(path.join(root, "src/components/TopBar.tsx")));
+  });
+  it("has no phone number or directions link inside the navbar component", () => {
+    const header = fs.readFileSync(path.join(root, "src/components/SiteHeader.tsx"), "utf8");
+    assert.ok(!/tel:|CONTACT\.|mapUrl|Get Directions|maps\.app/i.test(header));
+  });
   it("has no old blue values left", () => {
     for (const { f, text } of all) assert.ok(!/0033cc|00258f|eef3ff|d3deff/i.test(text), `${f} still has an old blue`);
   });

@@ -1,8 +1,7 @@
-# BHY Hospital Website (Phase 1.3)
+# BHY Hospital Website
 
 Official public website for **Begum Haji Yousuf Hospital (BHY Hospital)**, a project of Jamiyat Punjabi Saudagran-e-Delhi Karachi (JPSD).
 
-**Status: Phase 1 preview.** All doctor, department, service, schedule and contact content is a clearly labelled placeholder until the hospital supplies verified information. While placeholders are on, the site shows a preview banner and blocks search engines.
 
 ## Stack and why
 
@@ -41,10 +40,11 @@ npm run dev                    # http://localhost:3000
 
 | Variable | Purpose |
 | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | Confirmed production domain (no trailing slash). Drives canonical URLs, Open Graph, sitemap and structured data. Leave empty until confirmed. |
-| `SHOW_PLACEHOLDER_CONTENT` | `true` (default) shows labelled placeholders, a preview banner and blocks crawlers. Set to `false` only at launch, after real data replaces the placeholders. |
+| `NEXT_PUBLIC_SITE_URL` | Your public domain (no trailing slash). Drives canonical URLs, Open Graph, `sitemap.xml`, `robots.txt` and structured data. If empty on Vercel, the project's Vercel production domain is used. Set it when you attach a custom domain. |
+| `SITE_NOINDEX` | Set to `true` only to block all crawlers (for example on a staging site). Unset = indexable. |
+| `SHOW_PLACEHOLDER_CONTENT` | Draft sections stay hidden unless this is `true`. |
 
-Both are read at build time, so redeploy after changing them. No secrets are used.
+Search engines may index the site by default. On Vercel only the **Production** deployment is indexable: Preview and Development deployments get `noindex` and a disallow-all `robots.txt`. All variables are read at build time, so redeploy after changing them. No secrets are used.
 
 ## Project structure
 
@@ -79,11 +79,11 @@ docs/             Data guide, phase report, next-phase checklist
 
 ## Doctors
 
-Seven doctors are published from the hospital's doctor cards (see docs/DATA-GUIDE.md). Profiles are at `/doctors/<slug>`; the directory has name search, a department select and specialty chips.
+Seventeen doctors (3 cardiologists, 4 chest specialists, 6 dermatologists, 4 diabetologists) are published from the hospital's doctor cards (see docs/DATA-GUIDE.md). Profiles are at `/doctors/<slug>`; the directory searches as you type (name, partial name, any case, extra spaces, qualifications) together with a department select and specialty chips.
 
 ## Navbar, top bar, contact and social
 
-- `TopBar.tsx` (UAN, phone, Google Maps), `SiteHeader.tsx` (sticky navbar, Departments dropdown fed from the department data, slide-down mobile menu that closes on selection, Escape or an outside tap), `SocialLinks.tsx`, `LocationCard.tsx`.
+- `SiteHeader.tsx` (sticky navbar, Departments dropdown fed from the department data, slide-down mobile menu that closes on selection, Escape or an outside tap), `SocialLinks.tsx`, `LocationCard.tsx`.
 - Official contact details and social links live in `src/data/site.ts` (see docs/DATA-GUIDE.md). The location links to the supplied Google Maps URL; no coordinates are embedded.
 
 ## Departments and services
@@ -94,13 +94,11 @@ Departments come from the hospital workbook `design-assets/source-data/Consultan
 
 See [docs/DATA-GUIDE.md](docs/DATA-GUIDE.md). A doctor appears publicly only when `verified`, `active` and `approved` are true and `deleted` is false. Placeholders are never added to the sitemap or structured data.
 
-## Launch checklist (short)
+## Launch checks
 
-1. Confirm the production domain and set `NEXT_PUBLIC_SITE_URL`.
-2. Replace placeholder data with verified records, contact details and social links.
-3. Set `SHOW_PLACEHOLDER_CONTENT=false`.
-4. Have the hospital approve the Privacy Policy wording.
-5. Redeploy, then check `/robots.txt` and `/sitemap.xml`, and submit the sitemap in Google Search Console yourself. Indexing is decided by Google and is not guaranteed.
+1. Set `NEXT_PUBLIC_SITE_URL` to your custom domain (or rely on the Vercel production domain).
+2. After deploying to Production, open `/robots.txt` (it should say `Allow: /` and list the sitemap), `/sitemap.xml`, and view the page source of the home page (there must be no `noindex`).
+3. Add the site in Google Search Console and submit the sitemap yourself. Indexing is decided by Google and is not guaranteed.
 
 ## Deploy: GitHub and Vercel (do this only when you decide to)
 

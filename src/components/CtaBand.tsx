@@ -1,14 +1,12 @@
 import { CONTACT } from "@/data/site";
 import { Icon } from "./Icon";
 
+/** Slim "plan your visit" strip shown above the footer on inner pages. */
 export function CtaBand() {
   return (
     <section className="cta-band" aria-labelledby="cta-title">
       <div className="container cta-inner">
-        <div>
-          <h2 id="cta-title">Plan your visit</h2>
-          <p>Call the hospital to confirm timings, or get directions to Delhi Colony, Clifton.</p>
-        </div>
+        <h2 id="cta-title">Plan your visit</h2>
         <div className="cta-actions">
           <a className="btn btn--light" href={CONTACT.uanHref}>
             <Icon name="phone" size={18} /> UAN {CONTACT.uan}

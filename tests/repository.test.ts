@@ -39,11 +39,11 @@ describe("publishing rules", () => {
     assert.equal(isVisible(rec), false);
   });
 
-  it("shows placeholders only while placeholder mode is on", () => {
+  it("shows placeholders only when placeholder mode is switched on", () => {
     const rec = { status: { ...ok, verified: false, approved: false }, isPlaceholder: true };
-    assert.equal(isVisible(rec), true);
-    process.env.SHOW_PLACEHOLDER_CONTENT = "false";
     assert.equal(isVisible(rec), false);
+    process.env.SHOW_PLACEHOLDER_CONTENT = "true";
+    assert.equal(isVisible(rec), true);
   });
 
   it("never marks placeholders or deleted records as indexable", () => {

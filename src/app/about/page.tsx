@@ -5,6 +5,7 @@ import { CtaBand } from "@/components/CtaBand";
 import { Icon } from "@/components/Icon";
 import { PageHeader } from "@/components/PageHeader";
 import { SITE } from "@/data/site";
+import { showPlaceholderContent } from "@/lib/env";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -52,6 +53,8 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      {/* Draft sections are kept in code but only shown when SHOW_PLACEHOLDER_CONTENT=true */}
+      {showPlaceholderContent() ? (
       <section className="section section--wash">
         <div className="container">
           <div className="about-grid">
@@ -65,6 +68,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+      ) : null}
       <CtaBand />
     </>
   );

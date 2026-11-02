@@ -2,8 +2,9 @@ import type { Doctor, OpdDay, Weekday } from "@/lib/types";
 
 /**
  * DOCTORS: published from the hospital's official doctor cards (design-assets/doctor-cards-original/).
- * The card is the source of truth. Name spelling, qualifications, specialty, days and times are copied
- * exactly; nothing has been added. Fields the cards do not contain (bio, contact, fees) are left out.
+ * The card is the source of truth (the 17 cards in the folder are archived there). Name spelling, qualifications, specialty, days and times are copied
+ * exactly (only capitalization of "Sunday" was normalized); nothing has been added. Dr. Huma Panja's card shows a
+ * cartoon avatar instead of a photograph, so no photo is published for her until a real one is supplied. Fields the cards do not contain (bio, contact, fees) are left out.
  * Photographs are the circular portraits cropped from each card (public/doctors/).
  *
  * To add a doctor: add an entry below with the same fields. A doctor is public only when
@@ -49,6 +50,139 @@ export const verifiedDoctors: Doctor[] = [
     photo: "/doctors/sher-muhammad.jpg",
     scheduleLines: [{ days: "Monday, Wednesday & Friday", time: "08:00 PM TO 09:00 PM" }],
     opd: on(["Monday", "Wednesday", "Friday"], "20:00", "21:00"),
+    status: published,
+  },
+  // ---- Chest Specialists ----
+  {
+    slug: "aftab-ali",
+    name: "Dr. Aftab Ali",
+    qualifications: ["MBBS", "FCPS"],
+    specialization: "Chest Specialist",
+    departmentSlug: "chest-specialist",
+    photo: "/doctors/aftab-ali.jpg",
+    scheduleLines: [
+      { days: "Tuesday, Thursday & Saturday", time: "05:00 PM TO 07:00 PM" },
+    ],
+    opd: on(["Tuesday", "Thursday", "Saturday"], "17:00", "19:00"),
+    status: published,
+  },
+  {
+    slug: "chandni",
+    name: "Dr. Chandni",
+    qualifications: ["MBBS", "FCPS"],
+    specialization: "Chest Specialist",
+    departmentSlug: "chest-specialist",
+    photo: "/doctors/chandni.jpg",
+    scheduleLines: [
+      { days: "Tuesday, Friday & Sunday", time: "02:00 PM TO 04:00 PM" },
+    ],
+    opd: on(["Tuesday", "Friday", "Sunday"], "14:00", "16:00"),
+    status: published,
+  },
+  {
+    slug: "muhammad-raza",
+    name: "Dr. Muhammad Raza",
+    qualifications: ["MBBS", "DTCD"],
+    specialization: "Chest Specialist",
+    departmentSlug: "chest-specialist",
+    photo: "/doctors/muhammad-raza.jpg",
+    scheduleLines: [
+      { days: "Monday, Wednesday & Friday", time: "07:30 PM TO 08:30 PM" },
+    ],
+    opd: on(["Monday", "Wednesday", "Friday"], "19:30", "20:30"),
+    status: published,
+  },
+  {
+    slug: "saifullah",
+    name: "Dr. Saifullah",
+    qualifications: ["MBBS", "FCPS"],
+    specialization: "Chest Specialist",
+    departmentSlug: "chest-specialist",
+    photo: "/doctors/saifullah.jpg",
+    scheduleLines: [
+      { days: "Monday, Wednesday & Friday", time: "05:00 PM TO 07:00 PM" },
+    ],
+    opd: on(["Monday", "Wednesday", "Friday"], "17:00", "19:00"),
+    status: published,
+  },
+  // ---- Dermatologists ----
+  {
+    slug: "emadullah-kirmani",
+    name: "Dr. Emadullah Kirmani",
+    qualifications: ["MBBS", "D.DERMATOLOGY"],
+    specialization: "Dermatologist",
+    departmentSlug: "dermatologist",
+    photo: "/doctors/emadullah-kirmani.jpg",
+    scheduleLines: [
+      { days: "Wednesday & Saturday", time: "08:00 PM TO 10:00 PM" },
+    ],
+    opd: on(["Wednesday", "Saturday"], "20:00", "22:00"),
+    status: published,
+  },
+  {
+    slug: "farhan-mir-shaikh",
+    name: "Dr. Farhan Mir Shaikh",
+    qualifications: ["MBBS", "FCPS (EUROPEON BOARD CERTIFIED)"],
+    specialization: "Dermatologist",
+    departmentSlug: "dermatologist",
+    photo: "/doctors/farhan-mir-shaikh.jpg",
+    scheduleLines: [
+      { days: "Tuesday & Friday", time: "08:00 PM TO 10:00 PM" },
+    ],
+    opd: on(["Tuesday", "Friday"], "20:00", "22:00"),
+    status: published,
+  },
+  {
+    slug: "faryal-memon",
+    name: "Dr. Faryal Memon",
+    qualifications: ["MBBS", "FCPS", "MRCP"],
+    specialization: "Dermatologist",
+    departmentSlug: "dermatologist",
+    photo: "/doctors/faryal-memon.jpg",
+    scheduleLines: [
+      { days: "Tuesday & Friday", time: "06:00 PM TO 08:00 PM" },
+    ],
+    opd: on(["Tuesday", "Friday"], "18:00", "20:00"),
+    status: published,
+  },
+  {
+    slug: "huma-panja",
+    name: "Dr. Huma Panja",
+    qualifications: ["MBBS", "MCPS", "AAAM(USA)"],
+    specialization: "Dermatologist",
+    departmentSlug: "dermatologist",
+    photo: null,
+    scheduleLines: [
+      { days: "Monday & Thursday", time: "08:00 PM TO 10:00 PM" },
+    ],
+    opd: on(["Monday", "Thursday"], "20:00", "22:00"),
+    status: published,
+  },
+  {
+    slug: "junaid-rabbani",
+    name: "Dr. Junaid Rabbani",
+    qualifications: ["MBBS", "D.Dermatology"],
+    specialization: "Dermatologist",
+    departmentSlug: "dermatologist",
+    photo: "/doctors/junaid-rabbani.jpg",
+    scheduleLines: [
+      { days: "Monday to Saturday", time: "03:00 PM TO 04:00 PM" },
+    ],
+    opd: on(MON_SAT, "15:00", "16:00"),
+    status: published,
+  },
+  {
+    slug: "rajesh",
+    name: "Dr. Rajesh",
+    qualifications: ["MBBS", "FCPS", "DIP DERMA", "MD. DERMA"],
+    specialization: "Dermatologist",
+    departmentSlug: "dermatologist",
+    photo: "/doctors/rajesh.jpg",
+    scheduleLines: [
+      { days: "Monday & Thursday", time: "06:00 PM TO 07:00 PM" },
+      { days: "Tuesday & Friday", time: "04:00 PM TO 06:00 PM" },
+    ],
+    opd: [...on(["Monday", "Thursday"], "18:00", "19:00"), ...on(["Tuesday", "Friday"], "16:00", "18:00")],
     status: published,
   },
   // ---- Diabetologists ----

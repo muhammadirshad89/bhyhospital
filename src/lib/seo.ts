@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { SITE } from "@/data/site";
-import { showPlaceholderContent } from "./env";
+import { isIndexingAllowed } from "./env";
 
 interface PageMetaInput {
   title: Metadata["title"];
@@ -10,9 +10,9 @@ interface PageMetaInput {
   noindex?: boolean;
 }
 
-/** While placeholder content is visible the whole site is noindex, nofollow. */
+/** Pages are indexable unless indexing is blocked site-wide (see isIndexingAllowed) or for this page. */
 export function robotsFor(noindex?: boolean): Metadata["robots"] {
-  if (noindex || showPlaceholderContent()) return { index: false, follow: false };
+  if (noindex || !isIndexingAllowed()) return { index: false, follow: false };
   return undefined;
 }
 

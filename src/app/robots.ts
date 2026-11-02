@@ -1,8 +1,8 @@
 import type { MetadataRoute } from "next";
-import { siteUrl, showPlaceholderContent } from "@/lib/env";
+import { isIndexingAllowed, siteUrl } from "@/lib/env";
 
 export default function robots(): MetadataRoute.Robots {
-  if (showPlaceholderContent()) {
+  if (!isIndexingAllowed()) {
     return { rules: [{ userAgent: "*", disallow: "/" }] };
   }
   return {

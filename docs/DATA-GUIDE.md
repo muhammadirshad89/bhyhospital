@@ -4,7 +4,7 @@ Only add information the hospital has confirmed. Never guess names, qualificatio
 
 ## Doctors (`src/data/doctors.ts`, array `verifiedDoctors`)
 
-The seven current doctors were entered from the hospital's doctor cards (originals in `design-assets/doctor-cards-original/`). Copy new cards the same way: name, qualifications, specialty, days and times exactly as printed.
+The seventeen current doctors were entered from the hospital's doctor cards (originals in `design-assets/doctor-cards-original/`). Copy new cards the same way: name, qualifications, specialty, days and times exactly as printed.
 
 | Field | Required | Notes |
 | --- | --- | --- |
@@ -30,9 +30,9 @@ Add `{ date, text }` to `src/data/notices.ts`. They show at the top of the OPD p
 
 Official details are in `CONTACT` and `SOCIAL_LINKS` in `src/data/site.ts` (UAN, phone, address, Google Maps link, Facebook, Instagram). Change them there only: the top bar, navbar, footer, Contact Us page, location card and Hospital structured data all read from this one place. No email address or emergency number is published.
 
-## Removing placeholders
+## Placeholders
 
-Delete the `placeholder*` arrays (or leave them) and set `SHOW_PLACEHOLDER_CONTENT=false`. Placeholders then disappear and the site becomes indexable.
+There are no placeholder doctors, departments or services. Draft sections (for example the unwritten About Us panels) are hidden unless `SHOW_PLACEHOLDER_CONTENT=true`.
 
 ## Connecting a database or API later
 

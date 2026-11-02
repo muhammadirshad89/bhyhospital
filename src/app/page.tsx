@@ -1,13 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ContactList } from "@/components/ContactList";
-import { CtaBand } from "@/components/CtaBand";
+import { ContactSection } from "@/components/ContactSection";
 import { DepartmentCard } from "@/components/DepartmentCard";
 import { DoctorCard } from "@/components/DoctorCard";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { Icon, type IconName } from "@/components/Icon";
 import { JsonLd } from "@/components/JsonLd";
-import { LocationCard } from "@/components/LocationCard";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { HERO_HEADING, HERO_SLIDES, HERO_TEXT } from "@/data/hero-slides";
@@ -221,34 +219,16 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="section section--wash" aria-labelledby="visit-title">
+      <section className="section section--wash section--tight" aria-labelledby="visit-title">
         <div className="container">
           <Reveal>
-            <SectionHeading id="visit-title" eyebrow="Visit us" title="Contact and location" />
+            <SectionHeading id="visit-title" eyebrow="Visit us" title="Contact and location" href="/contact" hrefLabel="Contact page" />
           </Reveal>
-          <div className="visit-grid">
-            <Reveal>
-              <div className="panel">
-                <h3>Hospital contact details</h3>
-                <ContactList />
-                <p className="actions">
-                  <Link className="btn btn--solid" href="/opd-schedule">
-                    <Icon name="calendar" size={18} /> OPD schedule
-                  </Link>
-                  <Link className="btn btn--outline" href="/contact">
-                    Contact Us
-                  </Link>
-                </p>
-              </div>
-            </Reveal>
-            <Reveal delay={100}>
-              <LocationCard />
-            </Reveal>
-          </div>
+          <Reveal>
+            <ContactSection />
+          </Reveal>
         </div>
       </section>
-
-      <CtaBand />
     </>
   );
 }

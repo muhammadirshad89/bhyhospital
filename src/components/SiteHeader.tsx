@@ -62,10 +62,10 @@ export function SiteHeader({ departments }: { departments: NavDepartment[] }) {
       <div className="container header-row">
         <Link href="/" className="brand" onClick={closeAll}>
           <Image
-            src="/brand/bhy-logo.png"
+            src="/brand/bhy-logo-white.png"
             alt="B.H.Y. Hospital"
             width={720}
-            height={242}
+            height={222}
             priority
             className="brand-logo"
           />

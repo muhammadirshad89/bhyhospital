@@ -6,9 +6,9 @@ import { hospitalJsonLd, physicianJsonLd } from "../src/lib/structured-data";
 import robots from "../src/app/robots";
 import sitemap from "../src/app/sitemap";
 
+const ENV_KEYS = ["SHOW_PLACEHOLDER_CONTENT", "NEXT_PUBLIC_SITE_URL", "SITE_NOINDEX", "VERCEL_ENV", "VERCEL_PROJECT_PRODUCTION_URL"];
 afterEach(() => {
-  delete process.env.SHOW_PLACEHOLDER_CONTENT;
-  delete process.env.NEXT_PUBLIC_SITE_URL;
+  for (const k of ENV_KEYS) delete process.env[k];
 });
 
 describe("site URL", () => {
@@ -24,24 +24,56 @@ describe("site URL", () => {
   });
 });
 
-describe("indexing controls", () => {
-  it("blocks crawlers while placeholder content is on", () => {
-    assert.deepEqual(robotsFor(), { index: false, follow: false });
-    assert.deepEqual(robots().rules, [{ userAgent: "*", disallow: "/" }]);
-  });
-  it("allows crawlers and lists the sitemap once placeholders are off", () => {
-    process.env.SHOW_PLACEHOLDER_CONTENT = "false";
+describe("indexing controls (public launch defaults)", () => {
+  it("is indexable by default: no noindex meta and robots allows crawling with a sitemap", () => {
     process.env.NEXT_PUBLIC_SITE_URL = "https://hospital.example";
     assert.equal(robotsFor(), undefined);
     const r = robots();
+    assert.deepEqual(r.rules, [{ userAgent: "*", allow: "/" }]);
     assert.equal(r.sitemap, "https://hospital.example/sitemap.xml");
+  });
+  it("can still be blocked deliberately with SITE_NOINDEX=true", () => {
+    process.env.SITE_NOINDEX = "true";
+    assert.deepEqual(robotsFor(), { index: false, follow: false });
+    assert.deepEqual(robots().rules, [{ userAgent: "*", disallow: "/" }]);
+  });
+  it("blocks Vercel preview and development deployments but not production", () => {
+    process.env.VERCEL_ENV = "preview";
+    assert.deepEqual(robotsFor(), { index: false, follow: false });
+    process.env.VERCEL_ENV = "development";
+    assert.deepEqual(robots().rules, [{ userAgent: "*", disallow: "/" }]);
+    process.env.VERCEL_ENV = "production";
+    assert.equal(robotsFor(), undefined);
+  });
+  it("per-page noindex still works", () => {
+    assert.deepEqual(robotsFor(true), { index: false, follow: false });
+  });
+  it("no longer depends on the old placeholder switch", () => {
+    process.env.SHOW_PLACEHOLDER_CONTENT = "true";
+    assert.equal(robotsFor(), undefined);
+  });
+});
+
+describe("production domain", () => {
+  it("uses Vercel's production domain when NEXT_PUBLIC_SITE_URL is not set", () => {
+    process.env.VERCEL_PROJECT_PRODUCTION_URL = "bhy-example.vercel.app";
+    assert.equal(siteUrl(), "https://bhy-example.vercel.app");
+    assert.equal(isSiteUrlConfirmed(), true);
+  });
+  it("prefers the explicit NEXT_PUBLIC_SITE_URL over Vercel's domain", () => {
+    process.env.VERCEL_PROJECT_PRODUCTION_URL = "bhy-example.vercel.app";
+    process.env.NEXT_PUBLIC_SITE_URL = "https://www.hospital.example/";
+    assert.equal(siteUrl(), "https://www.hospital.example");
   });
 });
 
 describe("sitemap", () => {
-  it("never lists placeholder doctors or departments", async () => {
+  it("lists every public page, doctor and department, and no placeholders", async () => {
     const urls = (await sitemap()).map((e) => e.url);
     assert.ok(urls.some((u) => u.endsWith("/opd-schedule")));
+    assert.equal(urls.filter((u) => u.includes("/doctors/")).length, 17);
+    assert.equal(urls.filter((u) => u.includes("/departments/")).length, 26);
+    assert.ok(urls.some((u) => u.endsWith("/doctors/rajesh")) && urls.some((u) => u.endsWith("/doctors/huma-panja")));
     assert.ok(!urls.some((u) => u.includes("placeholder")), urls.join("\n"));
   });
 });

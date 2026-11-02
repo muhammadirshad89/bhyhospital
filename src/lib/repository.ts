@@ -32,19 +32,8 @@ function pick<T extends Record_>(verified: T[], placeholders: T[], indexableOnly
   return all.filter(indexableOnly ? isIndexable : isVisible);
 }
 
-export interface DoctorFilters {
-  q?: string;
-  department?: string;
-}
-
-export function filterDoctors(doctors: Doctor[], { q, department }: DoctorFilters): Doctor[] {
-  const needle = q?.trim().toLowerCase() ?? "";
-  return doctors.filter((d) => {
-    if (department && d.departmentSlug !== department) return false;
-    if (needle && !d.name.toLowerCase().includes(needle)) return false;
-    return true;
-  });
-}
+export { filterDoctors } from "./search";
+export type { DoctorFilters } from "./search";
 
 export function filterDepartments(departments: Department[], q?: string): Department[] {
   const needle = q?.trim().toLowerCase() ?? "";

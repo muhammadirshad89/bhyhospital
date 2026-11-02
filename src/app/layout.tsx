@@ -1,8 +1,6 @@
 import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { Newsreader, Public_Sans } from "next/font/google";
-import { PreviewBanner } from "@/components/PreviewBanner";
-import { TopBar } from "@/components/TopBar";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SITE } from "@/data/site";
@@ -43,8 +41,6 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <PreviewBanner />
-        <TopBar />
         <SiteHeader departments={departments} />
         <main id="main" tabIndex={-1}>
           {children}
