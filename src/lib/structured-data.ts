@@ -1,4 +1,4 @@
-import { CONTACT, SITE, SOCIAL_LINKS } from "@/data/site";
+import { CONTACT, OPD_HOURS, SITE, SOCIAL_LINKS } from "@/data/site";
 import { absoluteUrl, isSiteUrlConfirmed } from "./env";
 import { isIndexable } from "./repository";
 import type { Doctor } from "./types";
@@ -33,6 +33,12 @@ export function hospitalJsonLd(): Json | null {
     addressCountry: CONTACT.addressParts.country,
   };
   data.hasMap = CONTACT.mapUrl;
+  data.openingHoursSpecification = {
+    "@type": "OpeningHoursSpecification",
+    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    opens: OPD_HOURS.open,
+    closes: OPD_HOURS.close,
+  };
   data.sameAs = SOCIAL_LINKS.map((l) => l.href);
   return data;
 }

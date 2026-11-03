@@ -1,4 +1,4 @@
-import { CONTACT } from "@/data/site";
+import { CONTACT, OPD_HOURS } from "@/data/site";
 import { Icon } from "./Icon";
 import { SocialLinks } from "./SocialLinks";
 
@@ -30,6 +30,16 @@ export function ContactSection() {
             <a className="contact-value" href={CONTACT.phoneHref}>
               {CONTACT.phone}
             </a>
+          </div>
+        </li>
+        <li className="contact-card">
+          <span className="icon-chip icon-chip--solid" aria-hidden="true">
+            <Icon name="clock" size={22} />
+          </span>
+          <div>
+            <span className="contact-label">OPD Hours</span>
+            <span className="contact-value contact-value--text">{OPD_HOURS.range}</span>
+            <span className="contact-days">{OPD_HOURS.days}</span>
           </div>
         </li>
         <li className="contact-card contact-card--social">

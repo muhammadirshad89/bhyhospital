@@ -2,8 +2,8 @@ import type { Doctor, OpdDay, Weekday } from "@/lib/types";
 
 /**
  * DOCTORS: published from the hospital's official doctor cards (design-assets/doctor-cards-original/).
- * The card is the source of truth (the 17 cards in the folder are archived there). Name spelling, qualifications, specialty, days and times are copied
- * exactly (only capitalization of "Sunday" was normalized); nothing has been added. Dr. Huma Panja's card shows a
+ * The card is the source of truth (all 28 cards are archived there). Name spelling, qualifications, specialty, days and times are copied
+ * exactly (only capitalization was normalized, for example "sunday" and "Monday To Saturday"); nothing has been added. Dr. Huma Panja's card shows a
  * cartoon avatar instead of a photograph, so no photo is published for her until a real one is supplied. Fields the cards do not contain (bio, contact, fees) are left out.
  * Photographs are the circular portraits cropped from each card (public/doctors/).
  *
@@ -234,6 +234,157 @@ export const verifiedDoctors: Doctor[] = [
       { days: "Saturday", time: "07:00 PM TO 09:00 PM" },
     ],
     opd: [...on(["Monday", "Wednesday"], "16:00", "18:00"), day("Saturday", "19:00", "21:00")],
+    status: published,
+  },
+  // ---- Dental Surgeons ----
+  {
+    slug: "anwaar-bawani",
+    name: "Dr. Anwaar Bawani",
+    qualifications: ["BDS", "RDS", "C-ALIGNER", "C-IMPLANT", "C-ENDO"],
+    specialization: "Dental Surgeon",
+    departmentSlug: "dental-surgeon",
+    photo: "/doctors/anwaar-bawani.jpg",
+    scheduleLines: [
+      { days: "Monday to Saturday", time: "02:00 PM TO 04:00 PM" },
+    ],
+    opd: on(MON_SAT, "14:00", "16:00"),
+    status: published,
+  },
+  {
+    slug: "faryal-m-siddique",
+    name: "Dr. Faryal M. Siddique",
+    qualifications: ["BDS", "RDS", "C-ORTHO"],
+    specialization: "Dental Surgeon",
+    departmentSlug: "dental-surgeon",
+    photo: "/doctors/faryal-m-siddique.jpg",
+    scheduleLines: [
+      { days: "Monday to Saturday", time: "05:00 PM TO 09:00 PM" },
+    ],
+    opd: on(MON_SAT, "17:00", "21:00"),
+    status: published,
+  },
+  {
+    slug: "insha-shahid",
+    name: "Dr. Insha Shahid",
+    qualifications: ["BDS", "RDS"],
+    specialization: "Dental Surgeon",
+    departmentSlug: "dental-surgeon",
+    photo: "/doctors/insha-shahid.jpg",
+    scheduleLines: [
+      { days: "Monday & Wednesday", time: "02:00 PM TO 04:00 PM" },
+      { days: "Sunday", time: "04:00 PM TO 07:00 PM" },
+    ],
+    opd: [...on(["Monday", "Wednesday"], "14:00", "16:00"), day("Sunday", "16:00", "19:00")],
+    status: published,
+  },
+  // ---- Dental & Maxillofacial Surgeons ----
+  {
+    slug: "ayesha-yousuf",
+    name: "Dr. Ayesha Yousuf",
+    qualifications: ["BDS", "RDS", "FCPS ORAL AND MAXILLOFICAL SURGERY"],
+    specialization: "Dental & Maxillofacial Surgeon",
+    departmentSlug: "dental-maxillofacial-surgeon",
+    photo: "/doctors/ayesha-yousuf.jpg",
+    scheduleLines: [
+      { days: "Monday, Wednesday & Friday", time: "11:00 AM TO 01:00 PM" },
+      { days: "Sunday", time: "08:00 PM TO 10:00 PM" },
+    ],
+    opd: [...on(["Monday", "Wednesday", "Friday"], "11:00", "13:00"), day("Sunday", "20:00", "22:00")],
+    status: published,
+  },
+  {
+    slug: "fahad-ahmed",
+    name: "Dr. Fahad Ahmed",
+    qualifications: ["BDS", "RDS", "MDS"],
+    specialization: "Dental & Maxillofacial Surgeon",
+    departmentSlug: "dental-maxillofacial-surgeon",
+    photo: "/doctors/fahad-ahmed.jpg",
+    scheduleLines: [
+      { days: "Tuesday, Thursday & Saturday", time: "04:30 PM TO 06:30 PM" },
+    ],
+    opd: on(["Tuesday", "Thursday", "Saturday"], "16:30", "18:30"),
+    status: published,
+  },
+  // ---- E.N.T. Surgeons ----
+  {
+    slug: "abdul-hameed-shaikh",
+    name: "Dr. Abdul Hameed Shaikh",
+    qualifications: ["MBBS", "DLO"],
+    specialization: "E.N.T. Surgeon",
+    departmentSlug: "ent-surgeon",
+    photo: "/doctors/abdul-hameed-shaikh.jpg",
+    scheduleLines: [
+      { days: "Monday, Thursday & Friday", time: "12:00 PM TO 02:00 PM" },
+    ],
+    opd: on(["Monday", "Thursday", "Friday"], "12:00", "14:00"),
+    status: published,
+  },
+  {
+    slug: "noor-ahmed-shaikh",
+    name: "Dr. Noor Ahmed Shaikh",
+    qualifications: ["MBBS", "DLO"],
+    specialization: "E.N.T. Surgeon",
+    departmentSlug: "ent-surgeon",
+    photo: "/doctors/noor-ahmed-shaikh.jpg",
+    scheduleLines: [
+      { days: "Monday, Wednesday, Friday & Saturday", time: "04:00 PM TO 06:00 PM" },
+      { days: "Sunday", time: "04:00 PM TO 07:00 PM" },
+    ],
+    opd: [...on(["Monday", "Wednesday", "Friday", "Saturday"], "16:00", "18:00"), day("Sunday", "16:00", "19:00")],
+    status: published,
+  },
+  {
+    slug: "perwaiz-sheikh",
+    name: "Dr. Perwaiz Sheikh",
+    qualifications: ["MBBS", "DLO"],
+    specialization: "E.N.T. Surgeon",
+    departmentSlug: "ent-surgeon",
+    photo: "/doctors/perwaiz-sheikh.jpg",
+    scheduleLines: [
+      { days: "Monday to Saturday", time: "08:00 PM TO 10:00 PM" },
+    ],
+    opd: on(MON_SAT, "20:00", "22:00"),
+    status: published,
+  },
+  {
+    slug: "qaiser-sajjad",
+    name: "Dr. Qaiser Sajjad",
+    qualifications: ["MBBS", "DLO", "MS ENT"],
+    specialization: "E.N.T. Surgeon",
+    departmentSlug: "ent-surgeon",
+    photo: "/doctors/qaiser-sajjad.jpg",
+    scheduleLines: [
+      { days: "Monday to Friday", time: "06:00 PM TO 08:00 PM" },
+    ],
+    opd: on(MON_FRI, "18:00", "20:00"),
+    status: published,
+  },
+  {
+    slug: "syed-shahid-raza",
+    name: "Dr. Syed Shahid Raza",
+    qualifications: ["MBBS", "DLO", "MCPS", "FRCS"],
+    specialization: "E.N.T. Surgeon",
+    departmentSlug: "ent-surgeon",
+    photo: "/doctors/syed-shahid-raza.jpg",
+    scheduleLines: [
+      { days: "Tuesday, Wednesday & Saturday", time: "12:00 PM TO 02:00 PM" },
+      { days: "Sunday", time: "06:00 PM TO 08:00 PM" },
+    ],
+    opd: [...on(["Tuesday", "Wednesday", "Saturday"], "12:00", "14:00"), day("Sunday", "18:00", "20:00")],
+    status: published,
+  },
+  {
+    slug: "tanveer-shaikh",
+    name: "Dr. Tanveer Shaikh",
+    qualifications: ["MBBS", "DLO"],
+    specialization: "E.N.T. Surgeon",
+    departmentSlug: "ent-surgeon",
+    photo: "/doctors/tanveer-shaikh.jpg",
+    scheduleLines: [
+      { days: "Tuesday & Thursday", time: "03:00 PM TO 05:00 PM" },
+      { days: "Saturday", time: "03:00 PM TO 04:00 PM" },
+    ],
+    opd: [...on(["Tuesday", "Thursday"], "15:00", "17:00"), day("Saturday", "15:00", "16:00")],
     status: published,
   },
 ];

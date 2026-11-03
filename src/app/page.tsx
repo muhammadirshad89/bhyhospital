@@ -8,6 +8,7 @@ import { Icon, type IconName } from "@/components/Icon";
 import { JsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
+import { SundayOpdSection } from "@/components/SundayOpdSection";
 import { HERO_HEADING, HERO_SLIDES, HERO_TEXT } from "@/data/hero-slides";
 import { CONTACT, SITE } from "@/data/site";
 import { getDepartments, getDoctors, getServices } from "@/lib/repository";
@@ -19,6 +20,9 @@ export const metadata = pageMetadata({
   description: `Find doctors, departments, services and OPD schedules at ${SITE.name}, a project of ${SITE.organizationFull}.`,
   path: "/",
 });
+
+/** The home page shows the first few doctors of each specialty; the directory lists everyone. */
+const HOME_GROUP_LIMIT = 4;
 
 const SERVICE_ICONS: Record<string, IconName> = {
   "ct-scan": "scan",
@@ -104,6 +108,8 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <SundayOpdSection />
+
       {groups.map((g, i) => {
         const spec = g.list[0].specialization ?? g.dept.name;
         return (
@@ -116,12 +122,12 @@ export default async function HomePage() {
                   title={`Our ${spec}s`}
                   intro="Consultation days and timings as published by the hospital."
                   href={`/doctors?department=${g.dept.slug}`}
-                  hrefLabel={`All ${spec.toLowerCase()}s`}
+                  hrefLabel={g.list.length > HOME_GROUP_LIMIT ? `View all ${g.list.length}` : `All ${spec.toLowerCase()}s`}
                 />
               </Reveal>
               <Reveal>
                 <div className="doctor-grid">
-                  {g.list.map((d) => (
+                  {g.list.slice(0, HOME_GROUP_LIMIT).map((d) => (
                     <DoctorCard key={d.slug} doctor={d} departmentName={null} />
                   ))}
                 </div>

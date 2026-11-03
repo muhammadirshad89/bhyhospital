@@ -1,16 +1,17 @@
 import Link from "next/link";
-import { PlaceholderBadge, Tbc } from "@/components/Badge";
+import { PlaceholderBadge } from "@/components/Badge";
 import { Icon } from "@/components/Icon";
 import { PageHeader } from "@/components/PageHeader";
 import { DoctorPhoto } from "@/components/DoctorCard";
-import { CONTACT } from "@/data/site";
+import { CONTACT, OPD_HOURS } from "@/data/site";
+import { SUNDAY_OPD } from "@/data/sunday-opd";
 import { groupOpdByDay } from "@/lib/opd";
 import { getDoctors, getScheduleNotices } from "@/lib/repository";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
   title: "OPD Schedule",
-  description: "Day-by-day OPD schedule of the doctors at Begum Haji Yousuf Hospital, with consultation timings.",
+  description: "General OPD hours (Monday to Sunday, 8:00 AM – 10:00 PM) and the day-by-day consultation timings of the doctors at Begum Haji Yousuf Hospital, including Sunday OPD.",
   path: "/opd-schedule",
 });
 
@@ -42,14 +43,29 @@ export default async function OpdSchedulePage() {
             </div>
           ) : null}
 
-          <div className="notice">
+          <div className="notice opd-hours">
             <p>
-              <strong>Hospital OPD hours:</strong> <Tbc />
+              <Icon name="clock" size={18} /> <strong>{OPD_HOURS.label}</strong> <span className="muted">({OPD_HOURS.days})</span>
             </p>
             <p className="small muted">
-              Please call UAN <a href={CONTACT.uanHref}>{CONTACT.uan}</a> or phone <a href={CONTACT.phoneHref}>{CONTACT.phone}</a> to
-              confirm timings before you travel.
+              These are the hospital's general OPD hours. Each doctor consults on their own days and times, shown below and on their
+              profile, and not every doctor is available throughout the general hours. Please call UAN{" "}
+              <a href={CONTACT.uanHref}>{CONTACT.uan}</a> or phone <a href={CONTACT.phoneHref}>{CONTACT.phone}</a> to confirm before you
+              travel.
             </p>
+          </div>
+
+          <div className="panel sunday-panel" id="sunday-opd">
+            <h2 className="h3">{SUNDAY_OPD.heading}</h2>
+            <ul className="sunday-list sunday-list--light">
+              {SUNDAY_OPD.sessions.map((x) => (
+                <li key={x.specialty}>
+                  <span>{x.specialty}</span>
+                  <strong>{x.time}</strong>
+                </li>
+              ))}
+            </ul>
+            <p className="small muted">Taken from the hospital's official Sunday Consultant OPD poster. {SUNDAY_OPD.note}</p>
           </div>
 
           {!anyConfirmed ? (

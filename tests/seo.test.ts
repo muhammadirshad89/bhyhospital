@@ -71,7 +71,7 @@ describe("sitemap", () => {
   it("lists every public page, doctor and department, and no placeholders", async () => {
     const urls = (await sitemap()).map((e) => e.url);
     assert.ok(urls.some((u) => u.endsWith("/opd-schedule")));
-    assert.equal(urls.filter((u) => u.includes("/doctors/")).length, 17);
+    assert.equal(urls.filter((u) => u.includes("/doctors/")).length, 28);
     assert.equal(urls.filter((u) => u.includes("/departments/")).length, 26);
     assert.ok(urls.some((u) => u.endsWith("/doctors/rajesh")) && urls.some((u) => u.endsWith("/doctors/huma-panja")));
     assert.ok(!urls.some((u) => u.includes("placeholder")), urls.join("\n"));
@@ -90,6 +90,9 @@ describe("structured data", () => {
     assert.equal(d.telephone, "021-35822770");
     assert.equal((d.address as Record<string, string>).postalCode, "75600");
     assert.equal(d.hasMap, "https://maps.app.goo.gl/uAQ4F1ASqfLoyGXW7");
+    assert.deepEqual((d.openingHoursSpecification as Record<string, unknown>).dayOfWeek, ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]);
+    assert.equal((d.openingHoursSpecification as Record<string, unknown>).opens, "08:00");
+    assert.equal((d.openingHoursSpecification as Record<string, unknown>).closes, "22:00");
     assert.deepEqual(d.sameAs, ["https://www.facebook.com/bhyhospitalpk/", "https://www.instagram.com/bhyhospitalpk/"]);
     assert.ok(!("email" in d));
   });

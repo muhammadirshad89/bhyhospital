@@ -1,4 +1,4 @@
-import { CONTACT } from "@/data/site";
+import { CONTACT, OPD_HOURS } from "@/data/site";
 
 /** UAN, phone and address. The address opens the official Google Maps link in a new tab. */
 export function ContactList({ className = "" }: { className?: string }) {
@@ -14,6 +14,12 @@ export function ContactList({ className = "" }: { className?: string }) {
         <dt>Phone</dt>
         <dd>
           <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+        </dd>
+      </div>
+      <div>
+        <dt>OPD Hours</dt>
+        <dd>
+          {OPD_HOURS.range} <span className="contact-days">({OPD_HOURS.days})</span>
         </dd>
       </div>
       <div>

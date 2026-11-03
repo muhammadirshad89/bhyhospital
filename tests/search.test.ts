@@ -23,7 +23,7 @@ describe("doctor name search", () => {
   });
   it("finds every published doctor by their own full name", async () => {
     const all = await getDoctors();
-    assert.equal(all.length, 17);
+    assert.equal(all.length, 28);
     for (const d of all) assert.ok((await names(d.name)).includes(d.name), d.name);
     for (const d of all) assert.ok((await names(d.name.toUpperCase())).includes(d.name), d.name + " (upper)");
   });
@@ -40,6 +40,15 @@ describe("doctor name search", () => {
     for (const n of ["Dr. Asmat Nawaz", "Dr. Capt. Liaquat Ali", "Dr. Farooq Memon"]) assert.ok(diab.includes(n), n);
     assert.ok(!diab.includes("Dr. Lal Kumar"));
   });
+  it("finds the newly added dental and ENT doctors", async () => {
+    assert.deepEqual(await names("bawani"), ["Dr. Anwaar Bawani"]);
+    assert.deepEqual(await names("SAJJAD"), ["Dr. Qaiser Sajjad"]);
+    assert.deepEqual(await names("perwaiz"), ["Dr. Perwaiz Sheikh"]);
+    assert.deepEqual(await names("  ayesha  yousuf "), ["Dr. Ayesha Yousuf"]);
+    assert.deepEqual(await names("shahid"), ["Dr. Syed Shahid Raza", "Dr. Insha Shahid"].sort((a, b) => (a === "Dr. Syed Shahid Raza" ? -1 : 1)).sort());
+    assert.deepEqual(await names("dlo"), (await names("dlo")).filter((n) => /Shaikh|Sheikh|Sajjad|Raza/.test(n)));
+    assert.equal((await names("dlo")).length, 6);
+  });
   it("combines with the specialty filter", async () => {
     assert.deepEqual(await names("ali", "chest-specialist"), ["Dr. Aftab Ali"]);
     assert.deepEqual(await names("ali", "diabetologist-endocrinologist"), ["Dr. Capt. Liaquat Ali"]);
@@ -49,7 +58,7 @@ describe("doctor name search", () => {
   it("returns nothing for names that do not exist and everything for an empty query", async () => {
     assert.deepEqual(await names("zzzz"), []);
     assert.deepEqual(await names("lal zzzz"), []);
-    assert.equal((await names("   ")).length, 17);
+    assert.equal((await names("   ")).length, 28);
   });
   it("normalizes punctuation and case", () => {
     assert.equal(normalize("  Dr.  LAL-Kumar "), "dr lal kumar");

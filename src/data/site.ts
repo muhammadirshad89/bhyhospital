@@ -74,3 +74,15 @@ export const CREDIT = {
   phoneDisplay: "+923218100537",
   phoneHref: "tel:+923218100537",
 } as const;
+
+/**
+ * General hospital OPD hours (supplied by the hospital). These are NOT individual doctors' consultation
+ * schedules, which differ by doctor and are shown on each doctor's profile and on the OPD Schedule page.
+ */
+export const OPD_HOURS = {
+  days: "Monday to Sunday",
+  range: "8:00 AM – 10:00 PM",
+  label: "OPD Hours: 8:00 AM – 10:00 PM",
+  open: "08:00",
+  close: "22:00",
+} as const;

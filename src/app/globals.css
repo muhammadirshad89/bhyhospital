@@ -214,7 +214,7 @@ html { scroll-padding-top: 5.5rem; }
 .btn--ghost:hover { background: rgba(255, 255, 255, 0.14); color: var(--white); }
 .btn--block { display: flex; width: 100%; }
 .actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.25rem; max-width: none; }
-.link-arrow { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; text-decoration: none; color: var(--royal-deep); white-space: nowrap; }
+.link-arrow { display: inline-flex; align-items: center; gap: 0.4rem; font-weight: 600; text-decoration: none; color: var(--royal-deep); }
 .link-arrow .icon { transition: transform 0.2s var(--ease); }
 .link-arrow:hover .icon { transform: translateX(3px); }
 .link-arrow:hover { color: var(--navy); }
@@ -508,3 +508,35 @@ input[type="search"]:hover, select:hover { border-color: var(--royal); }
 .dept-card h3, .doctor-card-body h3, .service-card h2, .service-card h3, .location-card h3, .contact-list dd { overflow-wrap: break-word; }
 
 .contact-note { margin-top: 1.25rem; }
+
+/* Sunday OPD promotion */
+.sunday { background: var(--royal-deep); color: var(--white); padding-block: clamp(2rem, 5vw, 3.5rem); position: relative; overflow: hidden; }
+.sunday::after { content: ""; position: absolute; right: -6rem; top: -4rem; width: 30rem; height: 15rem; border: 1.5px solid rgba(255, 255, 255, 0.18); border-radius: 50%; transform: rotate(-12deg); pointer-events: none; }
+.sunday-grid { position: relative; z-index: 1; display: grid; gap: 1.75rem; align-items: center; }
+@media (min-width: 56rem) { .sunday-grid { grid-template-columns: 1.1fr 0.9fr; gap: 3rem; } }
+.sunday h2 { color: var(--white); margin-bottom: 0.5em; }
+.sunday p { color: var(--royal-tint); }
+.sunday-hours { display: flex; align-items: center; gap: 0.7rem; margin: 0 0 1rem; padding: 0.7rem 1rem; background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: var(--radius); color: var(--white) !important; width: fit-content; max-width: 100%; }
+.sunday-hours strong { display: block; font-size: 1.15rem; }
+.sunday-days { display: block; font-size: 0.85rem; color: var(--royal-tint); }
+.sunday-list { list-style: none; padding: 0; margin: 0 0 0.5rem; display: grid; gap: 0.4rem; }
+@media (min-width: 40rem) { .sunday-list { grid-template-columns: 1fr 1fr; gap: 0.5rem 0.9rem; } }
+.sunday-list li { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.1rem 0.75rem; min-width: 0; padding: 0.55rem 0.85rem; background: rgba(255, 255, 255, 0.1); border-radius: 8px; font-size: 0.95rem; }
+.sunday-list li strong { color: var(--white); white-space: nowrap; font-size: 0.92rem; }
+.sunday-list li span { color: var(--white); }
+.sunday-list--light { grid-template-columns: 1fr; }
+@media (min-width: 40rem) { .sunday-list--light { grid-template-columns: 1fr 1fr; } }
+.sunday-list--light li { background: var(--wash); }
+.sunday-list--light li span, .sunday-list--light li strong { color: var(--navy); }
+.sunday-poster { margin: 0; justify-self: center; width: min(100%, 34rem); }
+.sunday-poster-link { display: block; border-radius: var(--radius-lg); overflow: hidden; background: var(--white); box-shadow: 0 14px 40px rgba(10, 20, 60, 0.45); transition: transform 0.25s var(--ease); }
+.sunday-poster-link:hover { transform: translateY(-3px); }
+.sunday-poster-link img { display: block; width: 100%; height: auto; }
+.sunday-poster figcaption { margin-top: 0.6rem; font-size: 0.85rem; color: var(--royal-tint); text-align: center; }
+.sunday .actions .btn { min-height: 2.8rem; }
+@media (max-width: 30rem) { .sunday .actions .btn { width: 100%; } }
+.sunday-panel { margin-top: 1.25rem; }
+.opd-hours .icon { color: var(--royal); }
+.contact-days { display: block; font-size: 0.85rem; color: var(--gray); }
+.contact-list--footer .contact-days { display: inline; color: var(--royal-tint); }
+.contact-value--text { display: block; text-decoration: none; }

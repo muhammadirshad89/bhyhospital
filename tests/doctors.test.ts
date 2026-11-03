@@ -25,6 +25,17 @@ const CARDS: Record<string, { name: string; specialty: string; quals: string; li
   "huma-panja": { name: "Dr. Huma Panja", specialty: "Dermatologist", quals: "MBBS, MCPS, AAAM(USA)", lines: [["Monday & Thursday", "08:00 PM TO 10:00 PM"]] },
   "junaid-rabbani": { name: "Dr. Junaid Rabbani", specialty: "Dermatologist", quals: "MBBS, D.Dermatology", lines: [["Monday to Saturday", "03:00 PM TO 04:00 PM"]] },
   rajesh: { name: "Dr. Rajesh", specialty: "Dermatologist", quals: "MBBS, FCPS, DIP DERMA, MD. DERMA", lines: [["Monday & Thursday", "06:00 PM TO 07:00 PM"], ["Tuesday & Friday", "04:00 PM TO 06:00 PM"]] },
+  "anwaar-bawani": { name: "Dr. Anwaar Bawani", specialty: "Dental Surgeon", quals: "BDS, RDS, C-ALIGNER, C-IMPLANT, C-ENDO", lines: [["Monday to Saturday", "02:00 PM TO 04:00 PM"]] },
+  "faryal-m-siddique": { name: "Dr. Faryal M. Siddique", specialty: "Dental Surgeon", quals: "BDS, RDS, C-ORTHO", lines: [["Monday to Saturday", "05:00 PM TO 09:00 PM"]] },
+  "insha-shahid": { name: "Dr. Insha Shahid", specialty: "Dental Surgeon", quals: "BDS, RDS", lines: [["Monday & Wednesday", "02:00 PM TO 04:00 PM"], ["Sunday", "04:00 PM TO 07:00 PM"]] },
+  "ayesha-yousuf": { name: "Dr. Ayesha Yousuf", specialty: "Dental & Maxillofacial Surgeon", quals: "BDS, RDS, FCPS ORAL AND MAXILLOFICAL SURGERY", lines: [["Monday, Wednesday & Friday", "11:00 AM TO 01:00 PM"], ["Sunday", "08:00 PM TO 10:00 PM"]] },
+  "fahad-ahmed": { name: "Dr. Fahad Ahmed", specialty: "Dental & Maxillofacial Surgeon", quals: "BDS, RDS, MDS", lines: [["Tuesday, Thursday & Saturday", "04:30 PM TO 06:30 PM"]] },
+  "abdul-hameed-shaikh": { name: "Dr. Abdul Hameed Shaikh", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO", lines: [["Monday, Thursday & Friday", "12:00 PM TO 02:00 PM"]] },
+  "noor-ahmed-shaikh": { name: "Dr. Noor Ahmed Shaikh", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO", lines: [["Monday, Wednesday, Friday & Saturday", "04:00 PM TO 06:00 PM"], ["Sunday", "04:00 PM TO 07:00 PM"]] },
+  "perwaiz-sheikh": { name: "Dr. Perwaiz Sheikh", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO", lines: [["Monday to Saturday", "08:00 PM TO 10:00 PM"]] },
+  "qaiser-sajjad": { name: "Dr. Qaiser Sajjad", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO, MS ENT", lines: [["Monday to Friday", "06:00 PM TO 08:00 PM"]] },
+  "syed-shahid-raza": { name: "Dr. Syed Shahid Raza", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO, MCPS, FRCS", lines: [["Tuesday, Wednesday & Saturday", "12:00 PM TO 02:00 PM"], ["Sunday", "06:00 PM TO 08:00 PM"]] },
+  "tanveer-shaikh": { name: "Dr. Tanveer Shaikh", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO", lines: [["Tuesday & Thursday", "03:00 PM TO 05:00 PM"], ["Saturday", "03:00 PM TO 04:00 PM"]] },
   "nusrat-solangi": { name: "Dr. Nusrat Solangi", specialty: "Diabetologist", quals: "MBBS, MS (ENDOCRINOLOGY & DIABETOLOGY)", lines: [["Monday & Wednesday", "04:00 PM TO 06:00 PM"], ["Saturday", "07:00 PM TO 09:00 PM"]] },
 };
 
@@ -43,7 +54,7 @@ function to24(t: string): string {
 }
 
 describe("published doctors match the supplied cards", () => {
-  it("publishes exactly the 17 carded doctors and no placeholders", async () => {
+  it("publishes exactly the 28 carded doctors and no placeholders", async () => {
     const list = await getDoctors();
     assert.deepEqual(list.map((d) => d.slug).sort(), Object.keys(CARDS).sort());
     assert.ok(list.every((d) => !d.isPlaceholder && d.status.verified && d.status.approved));
@@ -69,14 +80,22 @@ describe("published doctors match the supplied cards", () => {
       if (slug === "huma-panja") assert.equal(d.photo, null, "her card has only a cartoon avatar");
       else assert.ok(d.photo && fs.existsSync(path.join(__dirname, "../public", d.photo)), String(d.photo));
       const dept = verifiedDepartments.find((x) => x.slug === d.departmentSlug)!;
-      assert.ok(dept.sourceName!.startsWith(card.specialty.toUpperCase()), `${dept.sourceName} vs ${card.specialty}`);
+      assert.ok(dept.sourceName!.startsWith(card.specialty.replace(/\./g, "").toUpperCase()), `${dept.sourceName} vs ${card.specialty}`);
     });
   }
+  it("has no duplicate doctors (names or slugs)", () => {
+    const norm = (n: string) => n.toLowerCase().replace(/[^a-z]/g, "");
+    assert.equal(new Set(verifiedDoctors.map((d) => d.slug)).size, verifiedDoctors.length);
+    assert.equal(new Set(verifiedDoctors.map((d) => norm(d.name))).size, verifiedDoctors.length);
+  });
   it("filters by department and name", async () => {
     const all = await getDoctors();
     assert.equal(filterDoctors(all, { department: "cardiologist" }).length, 3);
     assert.equal(filterDoctors(all, { department: "chest-specialist" }).length, 4);
     assert.equal(filterDoctors(all, { department: "dermatologist" }).length, 6);
+    assert.equal(filterDoctors(all, { department: "dental-surgeon" }).length, 3);
+    assert.equal(filterDoctors(all, { department: "dental-maxillofacial-surgeon" }).length, 2);
+    assert.equal(filterDoctors(all, { department: "ent-surgeon" }).length, 6);
     assert.equal(filterDoctors(all, { department: "diabetologist-endocrinologist" }).length, 4);
     assert.equal(filterDoctors(all, { q: "nusrat" })[0].slug, "nusrat-solangi");
     assert.equal((await getDoctorBySlug("sher-muhammad"))?.name, "Dr. Sher Muhammad");
