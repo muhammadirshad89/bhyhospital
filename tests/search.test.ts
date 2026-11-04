@@ -9,12 +9,28 @@ async function names(q: string, department?: string) {
 
 describe("doctor name search", () => {
   it("finds Dr. Lal Kumar by full name, first name, last name and any case", async () => {
-    for (const q of ["Lal Kumar", "lal", "KUMAR", "LAL KUMAR", "lAl kUmAr", "kumar lal", "dr lal", "Dr. Lal Kumar", "dr.lal"]) {
+    for (const q of ["Lal Kumar", "lal", "LAL KUMAR", "lAl kUmAr", "kumar lal", "dr lal", "Dr. Lal Kumar", "dr.lal"]) {
       assert.deepEqual(await names(q), ["Dr. Lal Kumar"], q);
     }
   });
   it("ignores leading, trailing and repeated spaces", async () => {
-    for (const q of ["   lal   kumar   ", "lal      kumar", "  KUMAR "]) assert.deepEqual(await names(q), ["Dr. Lal Kumar"], q);
+    for (const q of ["   lal   kumar   ", "lal      kumar", "  LAL "]) assert.deepEqual(await names(q), ["Dr. Lal Kumar"], q);
+  });
+  it("a shared surname lists every doctor with it, including Dr. Lal Kumar", async () => {
+    const r = await names("KUMAR");
+    assert.deepEqual([...r].sort(), ["Dr. Dileep Kumar", "Dr. Lal Kumar", "Dr. Manoj Kumar", "Dr. Sandeep Kumar", "Dr. Suresh Kumar"]);
+    assert.deepEqual(await names("  dileep   kumar"), ["Dr. Dileep Kumar"]);
+    assert.deepEqual(await names("Suresh"), ["Dr. Suresh Kumar"]);
+  });
+  it("finds the newly added gastroenterology and surgery doctors", async () => {
+    assert.deepEqual(await names("anum"), ["Dr. Anum Siddique"]);
+    assert.deepEqual(await names("LAIL"), ["Dr. Ghulamullah Lail"]);
+    assert.deepEqual(await names("furqaan"), ["Dr. Muhammad Furqaan"]);
+    assert.deepEqual(await names("m. ali taj"), ["Dr. M. Ali Taj"]);
+    assert.deepEqual(await names("maheshwari"), ["Dr. Jetender Maheshwari"]);
+    assert.deepEqual(await names("  zaheer  ahmed "), ["Dr. Zaheer Ahmed"]);
+    assert.deepEqual(await names("hpb"), ["Dr. Muhammad Hassan"]);
+    assert.deepEqual(await names("md(gastro"), ["Dr. Saleem Shahzad"]);
   });
   it("finds partial names", async () => {
     assert.deepEqual(await names("nusr"), ["Dr. Nusrat Solangi"]);
@@ -23,7 +39,7 @@ describe("doctor name search", () => {
   });
   it("finds every published doctor by their own full name", async () => {
     const all = await getDoctors();
-    assert.equal(all.length, 28);
+    assert.equal(all.length, 47);
     for (const d of all) assert.ok((await names(d.name)).includes(d.name), d.name);
     for (const d of all) assert.ok((await names(d.name.toUpperCase())).includes(d.name), d.name + " (upper)");
   });
@@ -58,7 +74,7 @@ describe("doctor name search", () => {
   it("returns nothing for names that do not exist and everything for an empty query", async () => {
     assert.deepEqual(await names("zzzz"), []);
     assert.deepEqual(await names("lal zzzz"), []);
-    assert.equal((await names("   ")).length, 28);
+    assert.equal((await names("   ")).length, 47);
   });
   it("normalizes punctuation and case", () => {
     assert.equal(normalize("  Dr.  LAL-Kumar "), "dr lal kumar");

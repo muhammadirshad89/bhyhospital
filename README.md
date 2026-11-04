@@ -79,7 +79,7 @@ docs/             Data guide, phase report, next-phase checklist
 
 ## Doctors
 
-Twenty-eight doctors (3 cardiologists, 4 chest specialists, 6 dermatologists, 4 diabetologists, 3 dental surgeons, 2 dental & maxillofacial surgeons, 6 ENT surgeons) are published from the hospital's doctor cards (see docs/DATA-GUIDE.md). Profiles are at `/doctors/<slug>`; the directory searches as you type (name, partial name, any case, extra spaces, qualifications) together with a department select and specialty chips.
+Forty-seven doctors (3 cardiologists, 4 chest specialists, 6 dermatologists, 4 diabetologists, 3 dental surgeons, 2 dental & maxillofacial surgeons, 6 ENT surgeons, 6 gastroenterologists, 13 general and laparoscopic surgeons) are published from the hospital's doctor cards (see docs/DATA-GUIDE.md). Profiles are at `/doctors/<slug>`; the directory searches as you type (name, partial name, any case, extra spaces, qualifications) together with a department select and specialty chips.
 
 ## OPD hours and Sunday OPD
 
@@ -88,7 +88,7 @@ Twenty-eight doctors (3 cardiologists, 4 chest specialists, 6 dermatologists, 4 
 
 ## Navbar, contact and social
 
-- `SiteHeader.tsx` (sticky navbar, Departments dropdown fed from the department data, slide-down mobile menu that closes on selection, Escape or an outside tap), `SocialLinks.tsx`, `LocationCard.tsx`.
+- `SiteHeader.tsx` (sticky navbar; Departments dropdown fed from the department data that opens on mouse hover, on the chevron button, or with the keyboard (Enter/Space, ArrowDown/Up, Home/End, Escape) and has no gap between trigger and panel; tap-to-open accordion in the slide-down mobile menu that closes on selection, Escape or an outside tap), `SocialLinks.tsx`, `LocationCard.tsx`.
 - Official contact details and social links live in `src/data/site.ts` (see docs/DATA-GUIDE.md). The location links to the supplied Google Maps URL; no coordinates are embedded.
 
 ## Departments and services

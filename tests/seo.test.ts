@@ -71,7 +71,7 @@ describe("sitemap", () => {
   it("lists every public page, doctor and department, and no placeholders", async () => {
     const urls = (await sitemap()).map((e) => e.url);
     assert.ok(urls.some((u) => u.endsWith("/opd-schedule")));
-    assert.equal(urls.filter((u) => u.includes("/doctors/")).length, 28);
+    assert.equal(urls.filter((u) => u.includes("/doctors/")).length, 47);
     assert.equal(urls.filter((u) => u.includes("/departments/")).length, 26);
     assert.ok(urls.some((u) => u.endsWith("/doctors/rajesh")) && urls.some((u) => u.endsWith("/doctors/huma-panja")));
     assert.ok(!urls.some((u) => u.includes("placeholder")), urls.join("\n"));

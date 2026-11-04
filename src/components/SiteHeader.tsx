@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type KeyboardEvent as ReactKeyboardEvent, type PointerEvent as ReactPointerEvent } from "react";
 import { NAV_LINKS, SITE } from "@/data/site";
 
 export interface NavDepartment {
@@ -18,6 +18,70 @@ export function SiteHeader({ departments }: { departments: NavDepartment[] }) {
   const header = useRef<HTMLElement>(null);
   const menuButton = useRef<HTMLButtonElement>(null);
   const deptButton = useRef<HTMLButtonElement>(null);
+  const subnavRef = useRef<HTMLDivElement>(null);
+  const closeTimer = useRef<number | null>(null);
+  const focusFirstItem = useRef(false);
+  const lastPointer = useRef<string>("");
+
+  const isDesktop = () => window.matchMedia("(min-width: 64rem)").matches;
+  const cancelClose = () => {
+    if (closeTimer.current !== null) {
+      window.clearTimeout(closeTimer.current);
+      closeTimer.current = null;
+    }
+  };
+  // Hover only applies to a real mouse on desktop. Touch and keyboard use the chevron button.
+  const hoverEnter = (e: ReactPointerEvent) => {
+    if (e.pointerType !== "mouse" || !isDesktop()) return;
+    cancelClose();
+    setDeptOpen(true);
+  };
+  const hoverLeave = (e: ReactPointerEvent) => {
+    if (e.pointerType !== "mouse" || !isDesktop()) return;
+    cancelClose();
+    // Short grace period so a brief slip off the edge does not close the menu.
+    closeTimer.current = window.setTimeout(() => setDeptOpen(false), 150);
+  };
+  const subnavLinks = () => Array.from(subnavRef.current?.querySelectorAll<HTMLAnchorElement>("a") ?? []);
+  const onDeptKeyDown = (e: ReactKeyboardEvent) => {
+    const target = e.target as HTMLElement;
+    if (target === deptButton.current && (e.key === "ArrowDown" || e.key === "ArrowUp")) {
+      e.preventDefault();
+      if (deptOpen) {
+        subnavLinks()[0]?.focus();
+      } else {
+        focusFirstItem.current = true;
+        setDeptOpen(true);
+      }
+      return;
+    }
+    if (target.closest("#dept-menu")) {
+      const links = subnavLinks();
+      const i = links.indexOf(target as HTMLAnchorElement);
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        links[Math.min(i + 1, links.length - 1)]?.focus();
+      } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        if (i <= 0) deptButton.current?.focus();
+        else links[i - 1]?.focus();
+      } else if (e.key === "Home") {
+        e.preventDefault();
+        links[0]?.focus();
+      } else if (e.key === "End") {
+        e.preventDefault();
+        links[links.length - 1]?.focus();
+      }
+    }
+  };
+
+  useEffect(() => () => cancelClose(), []);
+  useEffect(() => {
+    if (deptOpen && focusFirstItem.current) {
+      focusFirstItem.current = false;
+      subnavLinks()[0]?.focus();
+    }
+  }, [deptOpen]);
 
   const closeAll = () => {
     setMenuOpen(false);
@@ -101,8 +165,14 @@ export function SiteHeader({ departments }: { departments: NavDepartment[] }) {
                   <li
                     key={l.href}
                     className={`has-sub${deptOpen ? " is-open" : ""}`}
-                    onMouseEnter={() => window.matchMedia("(min-width: 64rem)").matches && setDeptOpen(true)}
-                    onMouseLeave={() => window.matchMedia("(min-width: 64rem)").matches && setDeptOpen(false)}
+                    onPointerEnter={hoverEnter}
+                    onPointerLeave={hoverLeave}
+                    onKeyDown={onDeptKeyDown}
+                    onBlur={(e) => {
+                      // Keyboard users tabbing out of the dropdown close it (desktop only).
+                      const next = e.relatedTarget as Node | null;
+                      if (next && !e.currentTarget.contains(next) && isDesktop()) setDeptOpen(false);
+                    }}
                   >
                     <div className="sub-head">
                       <Link href={l.href} aria-current={active ? "page" : undefined} onClick={closeAll}>
@@ -114,7 +184,17 @@ export function SiteHeader({ departments }: { departments: NavDepartment[] }) {
                         className="sub-toggle"
                         aria-expanded={deptOpen}
                         aria-controls="dept-menu"
-                        onClick={() => setDeptOpen((o) => !o)}
+                        onPointerDown={(e) => {
+                          lastPointer.current = e.pointerType;
+                        }}
+                        onClick={() => {
+                          cancelClose();
+                          // A mouse click on desktop lands while hover has already opened the menu, so keep it open
+                          // instead of toggling it shut. Keyboard, touch and the mobile accordion toggle as normal.
+                          const mouseOnDesktop = lastPointer.current === "mouse" && isDesktop();
+                          lastPointer.current = "";
+                          setDeptOpen((o) => (mouseOnDesktop ? true : !o));
+                        }}
                       >
                         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
                           <path d="M6 9l6 6 6-6" />
@@ -122,7 +202,7 @@ export function SiteHeader({ departments }: { departments: NavDepartment[] }) {
                         <span className="visually-hidden">Show departments list</span>
                       </button>
                     </div>
-                    <div id="dept-menu" className="subnav" hidden={!deptOpen}>
+                    <div id="dept-menu" ref={subnavRef} className="subnav" hidden={!deptOpen}>
                       {departments.length ? (
                         <ul>
                           {departments.map((d) => (

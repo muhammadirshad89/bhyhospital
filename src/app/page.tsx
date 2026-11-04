@@ -113,7 +113,7 @@ export default async function HomePage() {
       {groups.map((g, i) => {
         const spec = g.list[0].specialization ?? g.dept.name;
         return (
-          <section key={g.dept.slug} className={`section${i % 2 === 0 ? " section--wash" : ""}`} aria-labelledby={`grp-${g.dept.slug}`}>
+          <section key={g.dept.slug} className={`section section--tight${i % 2 === 0 ? " section--wash" : ""}`} aria-labelledby={`grp-${g.dept.slug}`}>
             <div className="container">
               <Reveal>
                 <SectionHeading

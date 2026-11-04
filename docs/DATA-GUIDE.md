@@ -4,7 +4,7 @@ Only add information the hospital has confirmed. Never guess names, qualificatio
 
 ## Doctors (`src/data/doctors.ts`, array `verifiedDoctors`)
 
-The twenty-eight current doctors were entered from the hospital's doctor cards (originals in `design-assets/doctor-cards-original/`). Copy new cards the same way: name, qualifications, specialty, days and times exactly as printed.
+The forty-seven current doctors were entered from the hospital's doctor cards (originals in `design-assets/doctor-cards-original/`). Copy new cards the same way: name, qualifications, specialty, days and times exactly as printed.
 
 | Field | Required | Notes |
 | --- | --- | --- |

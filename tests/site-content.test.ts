@@ -57,6 +57,15 @@ describe("project-wide scans", () => {
     const header = fs.readFileSync(path.join(root, "src/components/SiteHeader.tsx"), "utf8");
     assert.ok(!/tel:|CONTACT\.|mapUrl|Get Directions|maps\.app/i.test(header));
   });
+  it("dropdown hover area has no gap or clipped bridge, and hover uses mouse-only pointer events", () => {
+    const css = fs.readFileSync(path.join(root, "src/app/globals.css"), "utf8");
+    const header = fs.readFileSync(path.join(root, "src/components/SiteHeader.tsx"), "utf8");
+    assert.ok(!/\.subnav::before/.test(css), "no invisible bridge element");
+    assert.ok(!/top:\s*calc\(100% \+/.test(css), "panel must start flush with its trigger row");
+    assert.ok(/\.subnav \{[^}]*top: 100%/.test(css));
+    assert.ok(/onPointerEnter=\{hoverEnter\}/.test(header) && /onPointerLeave=\{hoverLeave\}/.test(header));
+    assert.ok(/pointerType !== "mouse"/.test(header));
+  });
   it("has no old blue values left", () => {
     for (const { f, text } of all) assert.ok(!/0033cc|00258f|eef3ff|d3deff/i.test(text), `${f} still has an old blue`);
   });

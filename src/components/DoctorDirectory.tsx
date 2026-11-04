@@ -122,7 +122,7 @@ export function DoctorDirectory({
               setDepartment("");
             }}
           >
-            All <span>{doctors.length}</span>
+            <span className="chip-label">All</span> <span className="chip-count">{doctors.length}</span>
           </Link>
           {chips.map(({ d, n }) => (
             <Link
@@ -135,7 +135,10 @@ export function DoctorDirectory({
                 setDepartment(d.slug);
               }}
             >
-              <BreakableName name={d.name} /> <span>{n}</span>
+              <span className="chip-label">
+                <BreakableName name={d.name} />
+              </span>{" "}
+              <span className="chip-count">{n}</span>
             </Link>
           ))}
         </nav>

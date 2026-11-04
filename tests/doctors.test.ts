@@ -36,10 +36,30 @@ const CARDS: Record<string, { name: string; specialty: string; quals: string; li
   "qaiser-sajjad": { name: "Dr. Qaiser Sajjad", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO, MS ENT", lines: [["Monday to Friday", "06:00 PM TO 08:00 PM"]] },
   "syed-shahid-raza": { name: "Dr. Syed Shahid Raza", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO, MCPS, FRCS", lines: [["Tuesday, Wednesday & Saturday", "12:00 PM TO 02:00 PM"], ["Sunday", "06:00 PM TO 08:00 PM"]] },
   "tanveer-shaikh": { name: "Dr. Tanveer Shaikh", specialty: "E.N.T. Surgeon", quals: "MBBS, DLO", lines: [["Tuesday & Thursday", "03:00 PM TO 05:00 PM"], ["Saturday", "03:00 PM TO 04:00 PM"]] },
+  "anum-siddique": { name: "Dr. Anum Siddique", specialty: "Gastroenterologist", quals: "MBBS, FCPS", lines: [["Tuesday & Thursday", "02:30 PM TO 03:30 PM"]] },
+  "ghulamullah-lail": { name: "Dr. Ghulamullah Lail", specialty: "Gastroenterologist", quals: "MBBS, FCPS", lines: [["Tuesday, Thursday & Friday", "04:00 PM TO 05:00 PM"]] },
+  "kiran-bajaj": { name: "Dr. Kiran Bajaj", specialty: "Gastroenterologist", quals: "MBBS, FCPS", lines: [["Tuesday & Thursday", "08:00 PM TO 09:00 PM"], ["Alternate Sunday", "08:00 PM TO 09:00 PM"]] },
+  "m-ali-taj": { name: "Dr. M. Ali Taj", specialty: "Gastroenterologist", quals: "MBBS, FCPS, MRCP", lines: [["Monday, Wednesday & Saturday", "04:00 PM TO 05:00 PM"]] },
+  "muhammad-furqaan": { name: "Dr. Muhammad Furqaan", specialty: "Gastroenterologist", quals: "MBBS, FCPS", lines: [["Monday, Wednesday & Saturday", "08:00 PM TO 09:00 PM"], ["Sunday", "03:30 PM TO 05:30 PM"]] },
+  "saleem-shahzad": { name: "Dr. Saleem Shahzad", specialty: "Gastroenterologist", quals: "MBBS, FCPS, FRCP(London), MRCP(Ireland), MD(Gastroenterology), FCPS(Gastroenterology)", lines: [["Monday, Wednesday & Friday", "06:30 PM TO 08:00 PM"]] },
+  "dileep-kumar": { name: "Dr. Dileep Kumar", specialty: "General & Laparoscopic Surgeon", quals: "MBBS, FCPS, FRCS", lines: [["Monday to Saturday", "04:30 PM TO 06:00 PM"]] },
+  "kainat-zafar": { name: "Dr. Kainat Zafar", specialty: "General & Laparoscopic Surgeon", quals: "MBBS, FCPS, CHPE", lines: [["Tuesday, Thursday, Saturday & Sunday", "03:00 PM TO 04:30 PM"]] },
+  "muhammad-hassan": { name: "Dr. Muhammad Hassan", specialty: "General & Laparoscopic Surgeon", quals: "MBBS, FCPS (FELLOWSHIP IN LIVER TRANSPLANT & HPB SURGEON)", lines: [["Tuesday, Wednesday & Friday", "08:00 PM TO 10:00 PM"]] },
+  "rabail-qureshi": { name: "Dr. Rabail Qureshi", specialty: "General & Laparoscopic Surgeon", quals: "MBBS, FCPS", lines: [["Monday to Thursday", "06:00 PM TO 07:30 PM"]] },
+  "tunza-irfan": { name: "Dr. Tunza Irfan", specialty: "General & Laparoscopic Surgeon", quals: "MBBS, FCPS", lines: [["Monday, Wednesday & Friday", "03:00 PM TO 04:30 PM"]] },
+  "ihsan-bashir": { name: "Dr. Ihsan Bashir", specialty: "General Surgeon", quals: "MBBS, FCPS", lines: [["Monday, Wednesday & Friday", "02:00 PM TO 05:00 PM"], ["Sunday", "03:00 PM TO 05:00 PM"]] },
+  "manoj-kumar": { name: "Dr. Manoj Kumar", specialty: "General Surgeon", quals: "MBBS, FCPS", lines: [["Thursday & Saturday", "01:00 PM TO 03:00 PM"], ["Sunday", "05:00 PM TO 08:00 PM"]] },
+  "sandeep-kumar": { name: "Dr. Sandeep Kumar", specialty: "General Surgeon", quals: "MBBS, FCPS", lines: [["Tuesday, Thursday & Saturday", "03:00 PM TO 06:00 PM"]] },
+  "shazia-iqbal": { name: "Dr. Shazia Iqbal", specialty: "General Surgeon", quals: "MBBS, FCPS", lines: [["Tuesday", "11:00 AM TO 01:00 PM"], ["Friday", "06:00 PM TO 08:00 PM"], ["Saturday", "08:00 PM TO 10:00 PM"]] },
+  "suresh-kumar": { name: "Dr. Suresh Kumar", specialty: "General Surgeon", quals: "MBBS, FCPS", lines: [["Monday to Friday", "08:00 PM TO 10:00 PM"]] },
+  "zaheer-ahmed": { name: "Dr. Zaheer Ahmed", specialty: "General Surgeon", quals: "MBBS, FCPS", lines: [["Tuesday, Thursday & Saturday", "06:00 PM TO 08:00 PM"]] },
+  "zunaira-jalil": { name: "Dr. Zunaira Jalil", specialty: "General Surgeon", quals: "MBBS, FCPS, MACG", lines: [["Monday & Wednesday", "05:00 PM TO 07:00 PM"]] },
+  "jetender-maheshwari": { name: "Dr. Jetender Maheshwari", specialty: "General Surgeon", quals: "MBBS, FCPS, CHPE", lines: [["Monday, Wednesday & Friday", "11:00 AM TO 01:00 PM"]] },
   "nusrat-solangi": { name: "Dr. Nusrat Solangi", specialty: "Diabetologist", quals: "MBBS, MS (ENDOCRINOLOGY & DIABETOLOGY)", lines: [["Monday & Wednesday", "04:00 PM TO 06:00 PM"], ["Saturday", "07:00 PM TO 09:00 PM"]] },
 };
 
 function parseDays(text: string): Weekday[] {
+  if (text === "Alternate Sunday") return ["Sunday"];
   const range = /^(\w+) to (\w+)$/.exec(text);
   if (range) {
     const a = WEEKDAYS.indexOf(range[1] as Weekday), b = WEEKDAYS.indexOf(range[2] as Weekday);
@@ -54,7 +74,7 @@ function to24(t: string): string {
 }
 
 describe("published doctors match the supplied cards", () => {
-  it("publishes exactly the 28 carded doctors and no placeholders", async () => {
+  it("publishes exactly the 47 carded doctors and no placeholders", async () => {
     const list = await getDoctors();
     assert.deepEqual(list.map((d) => d.slug).sort(), Object.keys(CARDS).sort());
     assert.ok(list.every((d) => !d.isPlaceholder && d.status.verified && d.status.approved));
@@ -80,9 +100,15 @@ describe("published doctors match the supplied cards", () => {
       if (slug === "huma-panja") assert.equal(d.photo, null, "her card has only a cartoon avatar");
       else assert.ok(d.photo && fs.existsSync(path.join(__dirname, "../public", d.photo)), String(d.photo));
       const dept = verifiedDepartments.find((x) => x.slug === d.departmentSlug)!;
-      assert.ok(dept.sourceName!.startsWith(card.specialty.replace(/\./g, "").toUpperCase()), `${dept.sourceName} vs ${card.specialty}`);
+      // Cards titled "General Surgeon" are filed under the workbook department "GENERAL & LAPAROSCOPIC SURGEON" (no plain "General Surgeon" heading exists).
+      const expected = card.specialty === "General Surgeon" ? "GENERAL & LAPAROSCOPIC SURGEON" : card.specialty.replace(/\./g, "").toUpperCase();
+      assert.ok(dept.sourceName!.startsWith(expected), `${dept.sourceName} vs ${card.specialty}`);
     });
   }
+  it("keeps Dr. Kiran Bajaj's alternate-Sunday note", () => {
+    const d = verifiedDoctors.find((x) => x.slug === "kiran-bajaj")!;
+    assert.equal(d.opd.find((o) => o.day === "Sunday")?.note, "Alternate Sunday");
+  });
   it("has no duplicate doctors (names or slugs)", () => {
     const norm = (n: string) => n.toLowerCase().replace(/[^a-z]/g, "");
     assert.equal(new Set(verifiedDoctors.map((d) => d.slug)).size, verifiedDoctors.length);
@@ -96,6 +122,8 @@ describe("published doctors match the supplied cards", () => {
     assert.equal(filterDoctors(all, { department: "dental-surgeon" }).length, 3);
     assert.equal(filterDoctors(all, { department: "dental-maxillofacial-surgeon" }).length, 2);
     assert.equal(filterDoctors(all, { department: "ent-surgeon" }).length, 6);
+    assert.equal(filterDoctors(all, { department: "gastroenterologist" }).length, 6);
+    assert.equal(filterDoctors(all, { department: "general-laparoscopic-surgeon" }).length, 13);
     assert.equal(filterDoctors(all, { department: "diabetologist-endocrinologist" }).length, 4);
     assert.equal(filterDoctors(all, { q: "nusrat" })[0].slug, "nusrat-solangi");
     assert.equal((await getDoctorBySlug("sher-muhammad"))?.name, "Dr. Sher Muhammad");

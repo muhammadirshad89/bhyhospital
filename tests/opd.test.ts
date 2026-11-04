@@ -53,6 +53,7 @@ describe("Sunday OPD promotion", () => {
     const days = groupOpdByDay(await getDoctors());
     const sunday = days.find((d) => d.day === "Sunday")!;
     const names = sunday.entries.map((e) => e.doctor.name).sort();
-    assert.deepEqual(names, ["Dr. Ayesha Yousuf", "Dr. Chandni", "Dr. Insha Shahid", "Dr. Noor Ahmed Shaikh", "Dr. Syed Shahid Raza"]);
+    assert.deepEqual(names, ["Dr. Ayesha Yousuf", "Dr. Chandni", "Dr. Ihsan Bashir", "Dr. Insha Shahid", "Dr. Kainat Zafar", "Dr. Kiran Bajaj", "Dr. Manoj Kumar", "Dr. Muhammad Furqaan", "Dr. Noor Ahmed Shaikh", "Dr. Syed Shahid Raza"]);
+    assert.equal(sunday.entries.find((e) => e.doctor.slug === "kiran-bajaj")?.note, "Alternate Sunday");
   });
 });
