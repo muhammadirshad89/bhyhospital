@@ -49,11 +49,18 @@ describe("Sunday OPD promotion", () => {
     const sec = read("src/components/SundayOpdSection.tsx");
     assert.ok(/CONTACT\.uanHref/.test(sec) && /CONTACT\.phoneHref/.test(sec));
   });
-  it("the OPD page lists doctors with Sunday sessions", async () => {
+  it("the OPD page lists every doctor with Sunday sessions, with labels and notes kept", async () => {
     const days = groupOpdByDay(await getDoctors());
     const sunday = days.find((d) => d.day === "Sunday")!;
-    const names = sunday.entries.map((e) => e.doctor.name).sort();
-    assert.deepEqual(names, ["Dr. Ayesha Yousuf", "Dr. Chandni", "Dr. Ihsan Bashir", "Dr. Insha Shahid", "Dr. Kainat Zafar", "Dr. Kiran Bajaj", "Dr. Manoj Kumar", "Dr. Muhammad Furqaan", "Dr. Noor Ahmed Shaikh", "Dr. Syed Shahid Raza"]);
-    assert.equal(sunday.entries.find((e) => e.doctor.slug === "kiran-bajaj")?.note, "Alternate Sunday");
+    assert.equal(sunday.entries.length, 22);
+    const by = new Map(sunday.entries.map((e) => [e.doctor.slug, e]));
+    assert.equal(by.get("kiran-bajaj")?.note, "Alternate Sunday");
+    assert.deepEqual(by.get("shaheen-ahmad")?.sessions, ["Emergency Department: 12:00 PM to 2:00 PM", "OPD Department: 6:00 PM to 8:00 PM"]);
+    for (const slug of ["ihsan-bashir", "manoj-kumar", "ambreen-sohaib", "kashif-murtaza", "fouzia-masood"]) assert.ok(by.has(slug), slug);
+  });
+  it("overnight sessions are formatted correctly", async () => {
+    const days = groupOpdByDay(await getDoctors());
+    const tue = days.find((d) => d.day === "Tuesday")!.entries.find((e) => e.doctor.slug === "muhammad-omair");
+    assert.deepEqual(tue?.sessions, ["10:00 PM to 12:00 AM"]);
   });
 });

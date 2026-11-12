@@ -3,6 +3,8 @@ import { describe, it } from "node:test";
 import { verifiedDepartments } from "../src/data/departments";
 import { verifiedServices } from "../src/data/services";
 import { CREDIT } from "../src/data/site";
+import fs from "node:fs";
+import path from "node:path";
 import { filterDepartments, getDepartments, getDoctors } from "../src/lib/repository";
 
 describe("departments (from the hospital workbook)", () => {
@@ -48,9 +50,35 @@ describe("departments (from the hospital workbook)", () => {
   });
 });
 
+describe("Clinical Psychologist spelling", () => {
+  it("is spelled correctly everywhere in data and URLs", () => {
+    const d = verifiedDepartments.find((x) => x.sourceRows?.includes(14))!;
+    assert.equal(d.name, "Clinical Psychologist");
+    assert.equal(d.slug, "clinical-psychologist");
+    assert.equal(d.sourceName, "CLINICAL PSYCHOLOGIST");
+    assert.equal(verifiedDepartments.length, 26);
+  });
+});
+
 describe("services and footer credit", () => {
-  it("lists the five workbook services by name only", () => {
-    assert.deepEqual(verifiedServices.map((s) => s.name), ["CT Scan", "Echo", "Mammography", "Peads Vaccination", "Physiotherapy"]);
+  it("lists the six services with their printed availability", () => {
+    assert.deepEqual(verifiedServices.map((s) => s.name), ["CT Scan", "Echocardiography", "Mammography", "Sonologist", "Paeds Vaccination", "Physiotherapy"]);
+    assert.equal(new Set(verifiedServices.map((s) => s.slug)).size, 6);
+    for (const s of verifiedServices) assert.ok(s.sessions.length > 0, s.slug);
+    const by = new Map(verifiedServices.map((s) => [s.slug, s]));
+    assert.equal(by.get("ct-scan")?.sessions[0].time, "24X7");
+    assert.deepEqual(by.get("mammography")?.sessions, [{ days: "Saturday", time: "03:00 PM to 05:00 PM", note: "Pre-Appointment" }]);
+    assert.equal(by.get("sonologist")?.sessions.length, 5);
+    assert.deepEqual(by.get("physiotherapy")?.sessions.map((x) => [x.label, x.days, x.time]), [["Female Physiotherapist", "Monday to Saturday", "10:00 AM to 05:00 PM"], ["Male Physiotherapist", "Monday to Saturday", "04:00 PM to 07:00 PM"]]);
+    assert.deepEqual(by.get("echocardiography")?.sessions.map((x) => [x.label, x.days, x.time]), [["Female echocardiographer", "Tuesday, Thursday & Saturday", "04:00 PM to 07:00 PM"], ["Male echocardiographer", "Monday, Wednesday & Friday", "07:00 PM to 09:00 PM"]]);
+    assert.deepEqual(by.get("paeds-vaccination")?.sessions.map((x) => [x.label, x.days, x.time]), [["Vaccinator", "Monday to Saturday", "10:00 AM to 02:00 PM"]]);
+  });
+  it("the genuine CT photo exists and sonologist sessions link to real doctor profiles", async () => {
+    const root = path.join(__dirname, "..");
+    const ct = verifiedServices.find((s) => s.slug === "ct-scan")!;
+    assert.ok(fs.existsSync(path.join(root, "public", ct.image!.src)) && ct.image!.alt.length > 20);
+    const slugs = new Set((await getDoctors()).map((d) => d.slug));
+    for (const sess of verifiedServices.find((s) => s.slug === "sonologist")!.sessions) assert.ok(sess.doctorSlug && slugs.has(sess.doctorSlug), String(sess.doctorSlug));
   });
   it("uses the exact credit text and a valid tel link", () => {
     assert.equal(CREDIT.text, "Design & Develop by: Syyed Muhammad Irshad");

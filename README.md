@@ -79,7 +79,11 @@ docs/             Data guide, phase report, next-phase checklist
 
 ## Doctors
 
-Forty-seven doctors (3 cardiologists, 4 chest specialists, 6 dermatologists, 4 diabetologists, 3 dental surgeons, 2 dental & maxillofacial surgeons, 6 ENT surgeons, 6 gastroenterologists, 13 general and laparoscopic surgeons) are published from the hospital's doctor cards (see docs/DATA-GUIDE.md). Profiles are at `/doctors/<slug>`; the directory searches as you type (name, partial name, any case, extra spaces, qualifications) together with a department select and specialty chips.
+One hundred and one doctors across all 26 departments are published from the hospital's doctor cards (see docs/DATA-GUIDE.md). Profiles are at `/doctors/<slug>`; the home page browses doctors by specialty with accessible tabs, and the directory searches as you type (name, partial name, any case, extra spaces, qualifications) together with a department select and specialty chips.
+
+## Services
+
+Six services (CT Scan, Echocardiography, Mammography, Sonologist, Paeds Vaccination, Physiotherapy) live in `src/data/services.ts` with the availability printed on the hospital's services plates. Each has a detail page at `/services/<slug>` (listed in the sitemap). Only the genuine CT scanner photograph is used as an image. The sonologist sessions link to the doctors' profiles.
 
 ## OPD hours and Sunday OPD
 

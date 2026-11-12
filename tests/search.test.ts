@@ -18,13 +18,15 @@ describe("doctor name search", () => {
   });
   it("a shared surname lists every doctor with it, including Dr. Lal Kumar", async () => {
     const r = await names("KUMAR");
-    assert.deepEqual([...r].sort(), ["Dr. Dileep Kumar", "Dr. Lal Kumar", "Dr. Manoj Kumar", "Dr. Sandeep Kumar", "Dr. Suresh Kumar"]);
+    const expected = (await getDoctors()).map((d) => d.name).filter((n) => /kumar/i.test(n));
+    assert.ok(expected.length >= 9 && r.includes("Dr. Lal Kumar"));
+    assert.deepEqual([...r].sort(), [...expected].sort());
     assert.deepEqual(await names("  dileep   kumar"), ["Dr. Dileep Kumar"]);
     assert.deepEqual(await names("Suresh"), ["Dr. Suresh Kumar"]);
   });
   it("finds the newly added gastroenterology and surgery doctors", async () => {
-    assert.deepEqual(await names("anum"), ["Dr. Anum Siddique"]);
-    assert.deepEqual(await names("LAIL"), ["Dr. Ghulamullah Lail"]);
+    assert.deepEqual([...(await names("anum"))].sort(), ["Dr. Anum Siddique", "Dr. Farah Anum Jameel"]);
+    assert.deepEqual([...(await names("LAIL"))].sort(), ["Dr. Ghulamullah Lail", "Prof. Dr. Amanullah Lail"]);
     assert.deepEqual(await names("furqaan"), ["Dr. Muhammad Furqaan"]);
     assert.deepEqual(await names("m. ali taj"), ["Dr. M. Ali Taj"]);
     assert.deepEqual(await names("maheshwari"), ["Dr. Jetender Maheshwari"]);
@@ -39,7 +41,7 @@ describe("doctor name search", () => {
   });
   it("finds every published doctor by their own full name", async () => {
     const all = await getDoctors();
-    assert.equal(all.length, 47);
+    assert.equal(all.length, 101);
     for (const d of all) assert.ok((await names(d.name)).includes(d.name), d.name);
     for (const d of all) assert.ok((await names(d.name.toUpperCase())).includes(d.name), d.name + " (upper)");
   });
@@ -58,23 +60,41 @@ describe("doctor name search", () => {
   });
   it("finds the newly added dental and ENT doctors", async () => {
     assert.deepEqual(await names("bawani"), ["Dr. Anwaar Bawani"]);
-    assert.deepEqual(await names("SAJJAD"), ["Dr. Qaiser Sajjad"]);
+    assert.deepEqual([...(await names("SAJJAD"))].sort(), ["Dr. Qaiser Sajjad", "Dr. Sajjad Ali"]);
     assert.deepEqual(await names("perwaiz"), ["Dr. Perwaiz Sheikh"]);
     assert.deepEqual(await names("  ayesha  yousuf "), ["Dr. Ayesha Yousuf"]);
-    assert.deepEqual(await names("shahid"), ["Dr. Syed Shahid Raza", "Dr. Insha Shahid"].sort((a, b) => (a === "Dr. Syed Shahid Raza" ? -1 : 1)).sort());
     assert.deepEqual(await names("dlo"), (await names("dlo")).filter((n) => /Shaikh|Sheikh|Sajjad|Raza/.test(n)));
     assert.equal((await names("dlo")).length, 6);
+  });
+  it("finds the Phase 1.7 doctors, including by the corrected spelling of a misspelt printed name", async () => {
+    assert.deepEqual(await names("lateef"), ["Dr. Muhammad Lateef"]);
+    assert.deepEqual(await names("  haris   patel "), ["Dr. Muhammad Haris Patel"]);
+    assert.deepEqual(await names("QURAT"), ["Dr. Qurat-ul-ain"]);
+    assert.deepEqual(await names("ambreen"), ["Ambreen Sohaib"]);
+    assert.deepEqual(await names("laghari"), ["Prof. Dr. Taj Laghari"]);
+    assert.deepEqual(await names("Muhamamd Imran"), ["Dr. Muhamamd Imran"]);
+    assert.deepEqual(await names("Muhammad Imran"), ["Dr. Muhamamd Imran"]);
+    assert.deepEqual(await names("muhammad adil khatri"), ["Dr. Muhamamd Adil Khatri"]);
+    assert.deepEqual(await names("rahma"), ["Ms. Rahma Ayaz"]);
+    assert.deepEqual(await names("khalil"), ["Dr. Khalil-ur-Rehman"]);
+    assert.deepEqual(await names("zeeshan"), ["Prof. Dr. Zeeshan Kamil"]);
+    assert.deepEqual(await names("s.m. tariq"), ["Dr. S.M. Tariq"]);
+    assert.deepEqual(await names("fsiu"), ["Dr. Waqar Hassan Shaikh"]);
+    assert.deepEqual(await names("mrcog"), ["Dr. Uzma Akram"]);
   });
   it("combines with the specialty filter", async () => {
     assert.deepEqual(await names("ali", "chest-specialist"), ["Dr. Aftab Ali"]);
     assert.deepEqual(await names("ali", "diabetologist-endocrinologist"), ["Dr. Capt. Liaquat Ali"]);
     assert.deepEqual(await names("lal", "dermatologist"), []);
+    assert.deepEqual(await names("khan", "gynaecologist"), ["Dr. Saima Khan"]);
+    assert.deepEqual(await names("suresh", "general-physician"), ["Dr. Suresh Kumar"]);
+    assert.deepEqual(await names("suresh", "general-laparoscopic-surgeon"), []);
     assert.equal((await names("", "dermatologist")).length, 6);
   });
   it("returns nothing for names that do not exist and everything for an empty query", async () => {
     assert.deepEqual(await names("zzzz"), []);
     assert.deepEqual(await names("lal zzzz"), []);
-    assert.equal((await names("   ")).length, 47);
+    assert.equal((await names("   ")).length, 101);
   });
   it("normalizes punctuation and case", () => {
     assert.equal(normalize("  Dr.  LAL-Kumar "), "dr lal kumar");

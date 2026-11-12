@@ -2,12 +2,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { ContactSection } from "@/components/ContactSection";
 import { DepartmentCard } from "@/components/DepartmentCard";
-import { DoctorCard } from "@/components/DoctorCard";
 import { HeroCarousel } from "@/components/HeroCarousel";
 import { Icon, type IconName } from "@/components/Icon";
 import { JsonLd } from "@/components/JsonLd";
 import { Reveal } from "@/components/Reveal";
+import { ServiceCard } from "@/components/ServiceCard";
 import { SectionHeading } from "@/components/SectionHeading";
+import { SpecialistTabs } from "@/components/SpecialistTabs";
 import { SundayOpdSection } from "@/components/SundayOpdSection";
 import { HERO_HEADING, HERO_SLIDES, HERO_TEXT } from "@/data/hero-slides";
 import { CONTACT, SITE } from "@/data/site";
@@ -24,14 +25,6 @@ export const metadata = pageMetadata({
 /** The home page shows the first few doctors of each specialty; the directory lists everyone. */
 const HOME_GROUP_LIMIT = 4;
 
-const SERVICE_ICONS: Record<string, IconName> = {
-  "ct-scan": "scan",
-  echo: "heart-pulse",
-  mammography: "activity",
-  "peads-vaccination": "shield",
-  physiotherapy: "activity",
-};
-
 const QUICK: { href: string; title: string; text: string; icon: IconName; external?: boolean }[] = [
   { href: "/doctors", title: "Our Doctors", text: "Search by name or specialty", icon: "stethoscope" },
   { href: "/opd-schedule", title: "OPD Schedule", text: "Days and consultation timings", icon: "calendar" },
@@ -41,12 +34,14 @@ const QUICK: { href: string; title: string; text: string; icon: IconName; extern
 
 export default async function HomePage() {
   const [doctors, departments, services] = await Promise.all([getDoctors(), getDepartments(), getServices()]);
-  const deptName = new Map(departments.map((d) => [d.slug, d.name]));
 
-  // One section per department that has published doctors, in the workbook's department order.
+  // One tab per department that has published doctors, in the workbook's department order.
   const groups = departments
-    .map((d) => ({ dept: d, list: doctors.filter((doc) => doc.departmentSlug === d.slug) }))
-    .filter((g) => g.list.length > 0);
+    .map((d) => {
+      const list = doctors.filter((doc) => doc.departmentSlug === d.slug);
+      return { slug: d.slug, name: d.name, total: list.length, doctors: list.slice(0, HOME_GROUP_LIMIT) };
+    })
+    .filter((g) => g.total > 0);
 
   return (
     <>
@@ -110,32 +105,21 @@ export default async function HomePage() {
 
       <SundayOpdSection />
 
-      {groups.map((g, i) => {
-        const spec = g.list[0].specialization ?? g.dept.name;
-        return (
-          <section key={g.dept.slug} className={`section section--tight${i % 2 === 0 ? " section--wash" : ""}`} aria-labelledby={`grp-${g.dept.slug}`}>
-            <div className="container">
-              <Reveal>
-                <SectionHeading
-                  id={`grp-${g.dept.slug}`}
-                  eyebrow="Our specialists"
-                  title={`Our ${spec}s`}
-                  intro="Consultation days and timings as published by the hospital."
-                  href={`/doctors?department=${g.dept.slug}`}
-                  hrefLabel={g.list.length > HOME_GROUP_LIMIT ? `View all ${g.list.length}` : `All ${spec.toLowerCase()}s`}
-                />
-              </Reveal>
-              <Reveal>
-                <div className="doctor-grid">
-                  {g.list.slice(0, HOME_GROUP_LIMIT).map((d) => (
-                    <DoctorCard key={d.slug} doctor={d} departmentName={null} />
-                  ))}
-                </div>
-              </Reveal>
-            </div>
-          </section>
-        );
-      })}
+      <section className="section section--tight section--wash" aria-labelledby="specialists-title">
+        <div className="container">
+          <Reveal>
+            <SectionHeading
+              id="specialists-title"
+              eyebrow="Our specialists"
+              title="Meet our doctors by specialty"
+              intro="Choose a specialty to see its doctors and their consultation days and timings."
+              href="/doctors"
+              hrefLabel={`All ${doctors.length} doctors`}
+            />
+          </Reveal>
+          <SpecialistTabs groups={groups} />
+        </div>
+      </section>
 
       <section className="section" aria-labelledby="dept-title">
         <div className="container">
@@ -166,14 +150,8 @@ export default async function HomePage() {
           </Reveal>
           <Reveal>
             <ul className="service-grid">
-              {services.map((s) => (
-                <li key={s.slug} className="service-card">
-                  <span className="icon-chip" aria-hidden="true">
-                    <Icon name={SERVICE_ICONS[s.slug] ?? "stethoscope"} size={24} />
-                  </span>
-                  <h3>{s.name}</h3>
-                  {s.summary ? <p className="muted small">{s.summary}</p> : null}
-                </li>
+              {services.map((x) => (
+                <ServiceCard key={x.slug} service={x} />
               ))}
             </ul>
           </Reveal>

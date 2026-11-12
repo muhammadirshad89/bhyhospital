@@ -35,6 +35,8 @@ export interface OpdDay {
 export interface Doctor {
   slug: string;
   name: string;
+  /** Other spellings people may search for (the printed name is never changed). */
+  aliases?: string[];
   /** Verified qualifications only. */
   qualifications: string[];
   specialization: string | null;
@@ -66,6 +68,24 @@ export interface Department {
   isPlaceholder?: boolean;
 }
 
+export interface ServiceSession {
+  /** Who or what the session is for, as printed (for example "Female Physiotherapist" or a sonologist's name). */
+  label?: string;
+  days?: string;
+  time: string;
+  /** For example "Pre-Appointment". */
+  note?: string;
+  /** Links the session to a published doctor profile. */
+  doctorSlug?: string;
+}
+
+export interface ServiceImage {
+  src: string;
+  width: number;
+  height: number;
+  alt: string;
+}
+
 export interface Service {
   slug: string;
   name: string;
@@ -73,6 +93,9 @@ export interface Service {
   sourceRows?: number[];
   summary: string;
   departmentSlugs: string[];
+  /** Availability exactly as printed on the hospital's services plates. */
+  sessions: ServiceSession[];
+  image?: ServiceImage;
   status: RecordStatus;
   isPlaceholder?: boolean;
 }

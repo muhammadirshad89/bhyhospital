@@ -4,7 +4,7 @@ Only add information the hospital has confirmed. Never guess names, qualificatio
 
 ## Doctors (`src/data/doctors.ts`, array `verifiedDoctors`)
 
-The forty-seven current doctors were entered from the hospital's doctor cards (originals in `design-assets/doctor-cards-original/`). Copy new cards the same way: name, qualifications, specialty, days and times exactly as printed.
+The one hundred and one current doctors were entered from the hospital's doctor cards (originals in `design-assets/doctor-cards-original/`). Copy new cards the same way: name, qualifications, specialty, days and times exactly as printed.
 
 | Field | Required | Notes |
 | --- | --- | --- |
@@ -41,3 +41,9 @@ Replace the bodies of the functions in `src/lib/repository.ts` (keep their names
 ## OPD hours and Sunday OPD
 
 `OPD_HOURS` (src/data/site.ts) is the general hospital OPD time. `SUNDAY_OPD` (src/data/sunday-opd.ts) holds the Sunday poster, its alt text and the English transcription of the poster's sessions. Individual doctors keep their own `scheduleLines`/`opd`; never copy the general hours into a doctor's record.
+
+## Services (`src/data/services.ts`)
+Each service has `sessions` (label, days, time, optional note, optional `doctorSlug`) copied from the services plates, and an optional `image` (only genuine hospital photographs). Do not add facilities or claims that are not on the plates.
+
+## Doctors whose printed name has a typo
+`name` keeps the printed spelling. Add the corrected spelling to `aliases` so search finds both (see Dr. Muhamamd Imran).

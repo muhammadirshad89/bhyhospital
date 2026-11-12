@@ -4,8 +4,8 @@ import type { Department } from "@/lib/types";
  * DEPARTMENTS: authoritative source is the hospital workbook
  * design-assets/source-data/Consultant_Schedule_OCT_2026_EXCEL.xlsx (sheet "Table 1").
  * Each entry is one specialty heading from that file, in the file's order.
- * - sourceName: the heading exactly as written in the workbook.
- * - name: the same wording shown on the site (only capitalization is changed, spelling is kept).
+ * - sourceName: the workbook heading (spelling corrected where the hospital asked, for example "Clinical Psychologist").
+ * - name: the same wording shown on the site (capitalization changed only).
  * - sourceRows: workbook row number(s) of the heading.
  * - reviewNote: internal flag for the hospital to confirm; never shown to visitors.
  * Summary and description are left empty on purpose until the hospital supplies verified text.
@@ -32,14 +32,13 @@ export const verifiedDepartments: Department[] = [
     status: verified,
   },
   {
-    slug: "clnical-psychologist",
-    name: "Clnical Psychologist",
-    sourceName: "CLNICAL PSYCHOLOGIST",
+    slug: "clinical-psychologist",
+    name: "Clinical Psychologist",
+    sourceName: "CLINICAL PSYCHOLOGIST",
     sourceRows: [14],
     summary: "",
     description: "",
     status: verified,
-    reviewNote: "Source spelling is \"CLNICAL\". Confirm whether the intended name is \"Clinical Psychologist\".",
   },
   {
     slug: "dermatologist",
@@ -157,7 +156,6 @@ export const verifiedDepartments: Department[] = [
     summary: "",
     description: "",
     status: verified,
-    reviewNote: "Source spelling is \"OPTHALMOLOGIST\". Confirm whether the intended name is \"Ophthalmologist (Eye Specialist)\".",
   },
   {
     slug: "orthopaedic-surgeon",

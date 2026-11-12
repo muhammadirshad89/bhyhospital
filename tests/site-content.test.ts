@@ -41,10 +41,20 @@ describe("official contact details", () => {
 describe("project-wide scans", () => {
   it("has no emergency contact, email address or mailto link in the source", () => {
     for (const { f, text } of all) {
-      assert.ok(!/emergency/i.test(text), `${f} mentions emergency`);
+      // Only a doctor's printed session location, "(Emergency Department)", is allowed, and only in the doctor data file.
+      const without = f.endsWith("src/data/doctors.ts") ? text.replace(/\(Emergency Department\)/g, "").replace(/"Emergency Department"/g, "") : text;
+      assert.ok(!/emergency/i.test(without), `${f} mentions emergency`);
       assert.ok(!/mailto:/i.test(text), `${f} has mailto`);
       assert.ok(!/[\w.+-]+@[\w-]+\.[\w.]+/.test(text), `${f} contains an email address`);
     }
+  });
+  it("does not contain the old Clinical Psychologist misspelling (apart from the permanent redirect)", () => {
+    for (const { f, text } of all) {
+      const cleaned = text.replace(/\/departments\/clnical-psychologist/g, "");
+      assert.ok(!/clnical/i.test(cleaned), `${f} still has the misspelling`);
+    }
+    const cfg = fs.readFileSync(path.join(root, "next.config.mjs"), "utf8");
+    assert.ok(/source: "\/departments\/clnical-psychologist", destination: "\/departments\/clinical-psychologist", permanent: true/.test(cfg));
   });
   it("has no pre-launch banner, top contact bar or banner text left", () => {
     for (const { f, text } of all) {

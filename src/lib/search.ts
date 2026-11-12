@@ -29,7 +29,7 @@ export function searchDoctors(doctors: Doctor[], query: string): Doctor[] {
   const byName: Doctor[] = [];
   const byQuals: Doctor[] = [];
   for (const d of doctors) {
-    const name = normalize(d.name);
+    const name = normalize([d.name, ...(d.aliases ?? [])].join(" "));
     if (words.every((w) => name.includes(w))) {
       byName.push(d);
       continue;

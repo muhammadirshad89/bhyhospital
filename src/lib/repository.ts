@@ -41,8 +41,15 @@ export function filterDepartments(departments: Department[], q?: string): Depart
   return departments.filter((d) => d.name.toLowerCase().includes(needle));
 }
 
+/** Doctors are listed in the hospital's department order (workbook order); within a department the data order is kept. */
+const DEPARTMENT_ORDER = new Map(verifiedDepartments.map((d, i) => [d.slug, i]));
+const orderOf = (d: Doctor) => (d.departmentSlug ? (DEPARTMENT_ORDER.get(d.departmentSlug) ?? 999) : 999);
+
 export async function getDoctors(opts: { indexableOnly?: boolean } = {}): Promise<Doctor[]> {
-  return pick(verifiedDoctors, placeholderDoctors, opts.indexableOnly);
+  return pick(verifiedDoctors, placeholderDoctors, opts.indexableOnly)
+    .map((d, i) => ({ d, i }))
+    .sort((a, b) => orderOf(a.d) - orderOf(b.d) || a.i - b.i)
+    .map((x) => x.d);
 }
 
 export async function getDoctorBySlug(slug: string): Promise<Doctor | undefined> {
@@ -59,6 +66,10 @@ export async function getDepartmentBySlug(slug: string): Promise<Department | un
 
 export async function getServices(opts: { indexableOnly?: boolean } = {}): Promise<Service[]> {
   return pick(verifiedServices, [], opts.indexableOnly);
+}
+
+export async function getServiceBySlug(slug: string): Promise<Service | undefined> {
+  return (await getServices()).find((x) => x.slug === slug);
 }
 
 export async function getScheduleNotices(): Promise<ScheduleNotice[]> {

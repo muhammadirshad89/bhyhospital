@@ -5,6 +5,12 @@ const nextConfig = {
   images: {
     formats: ["image/avif", "image/webp"],
   },
+  async redirects() {
+    return [
+      // The department URL was corrected in Phase 1.7 (spelling). Keep the old address working for anyone who saved or indexed it.
+      { source: "/departments/clnical-psychologist", destination: "/departments/clinical-psychologist", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

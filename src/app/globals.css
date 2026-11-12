@@ -543,3 +543,40 @@ input[type="search"]:hover, select:hover { border-color: var(--royal); }
 .contact-days { display: block; font-size: 0.85rem; color: var(--gray); }
 .contact-list--footer .contact-days { display: inline; color: var(--royal-tint); }
 .contact-value--text { display: block; text-decoration: none; }
+
+/* Service detail pages */
+.service-detail { display: grid; gap: 1.5rem; align-items: start; }
+@media (min-width: 56rem) { .service-detail { grid-template-columns: 1.1fr 0.9fr; gap: 2.5rem; } }
+.service-detail .panel { margin-bottom: 0; }
+.service-detail h2 .icon-chip { width: 2.25rem; height: 2.25rem; vertical-align: middle; }
+.service-sessions { list-style: none; padding: 0; margin: 0 0 1rem; display: grid; gap: 0.7rem; }
+.service-sessions li { display: flex; align-items: center; gap: 0.9rem; padding: 0.85rem 1rem; background: var(--wash); border-radius: var(--radius); }
+.service-sessions li > span:last-child { display: grid; gap: 0.15rem; justify-items: start; min-width: 0; }
+.session-days { color: var(--gray); }
+.session-time { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--royal-deep); font-weight: 700; font-size: 1.05rem; }
+.service-photo { margin: 0; border-radius: var(--radius-lg); overflow: hidden; box-shadow: var(--shadow-card); background: var(--wash); }
+.service-photo img { display: block; width: 100%; height: auto; }
+.chips li { list-style: none; }
+ul.chips { padding: 0; margin: 1rem 0 0; }
+.service-card .card-cta { padding-top: 0.25rem; }
+.service-card { position: relative; }
+.service-card h2, .service-card h3 { font-size: 1.2rem; }
+.service-card h2 a, .service-card h3 a { color: var(--navy); text-decoration: none; }
+
+/* Home: specialist tabs */
+.spec-tabs { display: flex; gap: 0.5rem; overflow-x: auto; padding: 0.25rem 0.1rem 0.75rem; scroll-snap-type: x proximity; scrollbar-width: thin; }
+.spec-tab { flex: none; scroll-snap-align: start; display: inline-flex; align-items: center; gap: 0.5rem; min-height: 2.6rem; padding: 0.3rem 0.95rem; border-radius: 999px; border: 1.5px solid var(--wash-line); background: var(--white); color: var(--navy); font: inherit; font-weight: 600; font-size: 0.95rem; cursor: pointer; white-space: nowrap; transition: background-color 0.2s var(--ease), border-color 0.2s var(--ease), color 0.2s var(--ease); }
+.spec-tab:hover { border-color: var(--royal); }
+.spec-tab[aria-selected="true"] { background: var(--royal); border-color: var(--royal); color: var(--white); }
+.spec-count { font-size: 0.8rem; background: var(--wash); color: var(--royal-deep); border-radius: 999px; padding: 0 0.5rem; }
+.spec-tab[aria-selected="true"] .spec-count { background: rgba(255, 255, 255, 0.22); color: var(--white); }
+.spec-panel { margin-top: 1rem; }
+.spec-more { display: flex; flex-wrap: wrap; gap: 0.5rem 1.75rem; margin: 1.25rem 0 0; max-width: none; }
+.chips { gap: 0.4rem; }
+.chip { min-height: 2.35rem; padding: 0.2rem 0.8rem; font-size: 0.92rem; }
+.service-detail > * { min-width: 0; }
+.service-sessions li { min-width: 0; }
+.service-sessions strong, .session-days, .session-time { overflow-wrap: anywhere; }
+.service-grid > li { min-width: 0; }
+.service-detail--single { max-width: 48rem; margin-inline: auto; }
+@media (min-width: 56rem) { .service-detail--single { grid-template-columns: 1fr; } }

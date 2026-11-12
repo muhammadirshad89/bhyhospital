@@ -1,0 +1,876 @@
+[
+ {
+  "slug": "muhammad-lateef",
+  "name": "Dr. Muhammad Lateef",
+  "specialty": "Psychiatrist",
+  "dept": "psychiatrist",
+  "quals": "MBBS, FCPS (Psychiatry), DIPLOMA (Psychology Medicine)",
+  "lines": [
+   [
+    "Tuesday & Saturday",
+    "07:00 PM TO 08:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "sidra-mustaqeem",
+  "name": "Dr. Sidra Mustaqeem",
+  "specialty": "Clinical Psychologist",
+  "dept": "clinical-psychologist",
+  "quals": "MA (PSYCOLOGY), PMDACP",
+  "lines": [
+   [
+    "Wednesday",
+    "04:00 PM TO 05:00 PM (Pre-Appointment)"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "muhammad-haris-patel",
+  "name": "Dr. Muhammad Haris Patel",
+  "specialty": "Paediatric Surgeon",
+  "dept": "paediatric-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday & Friday",
+    "05:00 PM TO 07:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "mehak-ali-memon",
+  "name": "Dr. Mehak Ali Memon",
+  "specialty": "Plastic Surgeon",
+  "dept": "plastic-surgeon",
+  "quals": "MBBS, FCPS (PLAST)",
+  "lines": [
+   [
+    "Monday, Wednesday & Friday",
+    "08:00 PM TO 09:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "kehkashan-khoso",
+  "name": "Dr. Kehkashan Khoso",
+  "specialty": "Sonologist",
+  "dept": "sonologist",
+  "quals": "",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "11:30 AM TO 01:00 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "qurat-ul-ain",
+  "name": "Dr. Qurat-ul-ain",
+  "specialty": "Sonologist",
+  "dept": "sonologist",
+  "quals": "",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "01:30 PM TO 04:00 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "najma-memon",
+  "name": "Dr. Najma Memon",
+  "specialty": "Sonologist",
+  "dept": "sonologist",
+  "quals": "",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "04:30 PM TO 07:30 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "manesh-kumar",
+  "name": "Dr. Manesh Kumar",
+  "specialty": "Sonologist",
+  "dept": "sonologist",
+  "quals": "",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "08:00 PM TO 10:00 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "ambreen-sohaib",
+  "name": "Ambreen Sohaib",
+  "specialty": "Sonologist",
+  "dept": "sonologist",
+  "quals": "",
+  "lines": [
+   [
+    "Sunday",
+    "04:00 PM TO 06:00 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "sadaf-zehra",
+  "name": "Dr. Sadaf Zehra",
+  "specialty": "Paediatrician",
+  "dept": "paediatrician",
+  "quals": "MBBS, MCPS",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "09:00 AM TO 11:30 AM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "srichand",
+  "name": "Dr. Srichand",
+  "specialty": "Paediatrician",
+  "dept": "paediatrician",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "09:00 AM TO 11:30 AM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "amanullah-lail",
+  "name": "Prof. Dr. Amanullah Lail",
+  "specialty": "Paediatrician",
+  "dept": "paediatrician",
+  "quals": "MBBS, FCPS, PGPN, IPPN",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "04:00 PM TO 07:00 PM"
+   ],
+   [
+    "Sunday",
+    "04:00 PM TO 06:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "taj-laghari",
+  "name": "Prof. Dr. Taj Laghari",
+  "specialty": "Paediatrician",
+  "dept": "paediatrician",
+  "quals": "MBBS, DCH, MCPS, FCPS",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "07:00 PM TO 10:00 PM"
+   ],
+   [
+    "Sunday",
+    "08:00 PM TO 10:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "muhammad-omair",
+  "name": "Dr. Muhammad Omair",
+  "specialty": "Paediatrician",
+  "dept": "paediatrician",
+  "quals": "MBBS, MCPS",
+  "lines": [
+   [
+    "Tuesday, Thursday and Friday",
+    "10:00 PM TO 12:00 AM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "shaheen-ahmad",
+  "name": "Dr. Shaheen Ahmad",
+  "specialty": "Paediatrician",
+  "dept": "paediatrician",
+  "quals": "MBBS, DCH, MCPS(PEADS), FCPS(PEADS) PGPN",
+  "lines": [
+   [
+    "Monday, Wednesday and Friday",
+    "12:00 PM TO 03:00 PM"
+   ],
+   [
+    "Sunday",
+    "12:00 PM TO 02:00 PM (Emergency Department)"
+   ],
+   [
+    "Sunday",
+    "06:00 PM TO 08:00 PM (OPD Department)"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "lachman-das",
+  "name": "Dr. Lachman Das",
+  "specialty": "Paediatrician",
+  "dept": "paediatrician",
+  "quals": "MBBS, DCH",
+  "lines": [
+   [
+    "Monday, Wednesday, Saturday & Sunday",
+    "10:00 PM TO 12:00 AM (Emergency Department)"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "waqar-hassan-shaikh",
+  "name": "Dr. Waqar Hassan Shaikh",
+  "specialty": "Urologist",
+  "dept": "urologist",
+  "quals": "MBBS, FCPS, FSIU",
+  "lines": [
+   [
+    "Monday to Thursday",
+    "04:30 PM TO 06:30 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "shahid-hussain",
+  "name": "Dr. Shahid Hussain",
+  "specialty": "Urologist",
+  "dept": "urologist",
+  "quals": "MBBS, FCPS, MRCPS, CHPE (ASST. PROF)",
+  "lines": [
+   [
+    "Monday, Wednesday, Thursday & Friday",
+    "07:00 PM TO 09:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "muhammad-imran",
+  "name": "Dr. Muhamamd Imran",
+  "specialty": "Urologist",
+  "dept": "urologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday & Saturday",
+    "07:00 PM TO 08:30 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": [
+   "Dr. Muhammad Imran"
+  ]
+ },
+ {
+  "slug": "rahma-ayaz",
+  "name": "Ms. Rahma Ayaz",
+  "specialty": "Nutritionist",
+  "dept": "nutritionist",
+  "quals": "MSC (Nutrition)",
+  "lines": [
+   [
+    "Monday to Friday",
+    "10:00 AM TO 01:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "fouzia-masood",
+  "name": "Dr. Fouzia Masood",
+  "specialty": "Family Physician",
+  "dept": "family-physician",
+  "quals": "MBBS, MCPS (Family Medicine)",
+  "lines": [
+   [
+    "Sunday",
+    "02:00 PM TO 03:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "khalil-ur-rehman",
+  "name": "Dr. Khalil-ur-Rehman",
+  "specialty": "Vascular Surgeon",
+  "dept": "vascular-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday & Saturday (Pre-Appointment)",
+    "06:00 PM TO 07:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "salma-ayaz",
+  "name": "Dr. Salma Ayaz",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday",
+    "10:00 AM TO 12:00 PM"
+   ],
+   [
+    "Wednesday & Friday",
+    "10:00 AM TO 12:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "samina-qazi",
+  "name": "Dr. Samina Qazi",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday, Wednesday, Friday & Saturday",
+    "12:00 PM TO 02:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "afshan-javed",
+  "name": "Dr. Afshan Javed",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, MCPS",
+  "lines": [
+   [
+    "Sunday",
+    "03:00 PM TO 05:00 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "aruna-kumari",
+  "name": "Dr. Aruna Kumari",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, FCPS (ASST. PROF)",
+  "lines": [
+   [
+    "Wednesday, Friday & Saturday",
+    "02:00 PM TO 04:00 PM (Pre-Appointment Available)"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "raana-bukhari",
+  "name": "Dr. Raana Bukhari",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, MCPS, FCPS",
+  "lines": [
+   [
+    "Monday & Wednesday",
+    "06:00 PM TO 08:00 PM (Pre-Appointment Available)"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "usha-ashok",
+  "name": "Dr. Usha Ashok",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday, Wednesday & Friday",
+    "08:00 PM TO 10:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "zahe-gul",
+  "name": "Dr. Zahe Gul",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday, Thursday & Saturday",
+    "09:30 AM TO 12:00 PM"
+   ],
+   [
+    "Monday",
+    "05:00 PM TO 06:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "saima-khan",
+  "name": "Dr. Saima Khan",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday & Thursday",
+    "02:00 PM TO 04:00 PM"
+   ],
+   [
+    "Friday",
+    "06:00 PM TO 08:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "rabia-saleem",
+  "name": "Dr. Rabia Saleem",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, MCPS",
+  "lines": [
+   [
+    "Monday & Thursday",
+    "01:00 PM TO 02:00 PM"
+   ],
+   [
+    "Sunday",
+    "07:00 PM TO 09:00 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "uzma-akram",
+  "name": "Dr. Uzma Akram",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, MRCOG, FRCOG",
+  "lines": [
+   [
+    "Monday & Thursday",
+    "11:00 AM TO 01:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "mala-shahani",
+  "name": "Dr. Mala Shahani",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday, Thursday & Saturday",
+    "08:00 PM TO 10:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "musarrat-jabeen-qazi",
+  "name": "Dr. Musarrat Jabeen Qazi",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, MCPS",
+  "lines": [
+   [
+    "Tuesday, Thursday & Saturday",
+    "05:30 PM TO 07:30 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "shahnaz-younus",
+  "name": "Dr. Shahnaz Younus",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, MCPS, FCPS",
+  "lines": [
+   [
+    "Tuesday & Friday",
+    "05:00 PM TO 09:00 PM (Pre-Appointment Available)"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "farah-naz",
+  "name": "Dr. Farah Naz",
+  "specialty": "Gynaecologist",
+  "dept": "gynaecologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday",
+    "03:00 PM TO 05:00 PM"
+   ],
+   [
+    "Sunday",
+    "05:00 PM TO 07:00 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "farah-anum-jameel",
+  "name": "Dr. Farah Anum Jameel",
+  "specialty": "Nephrologist",
+  "dept": "nephrologist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday & Thursday",
+    "04:00 PM TO 06:00 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "haran-kumar",
+  "name": "Dr. Haran Kumar",
+  "specialty": "Nephrologist",
+  "dept": "nephrologist",
+  "quals": "MBBS, MD. NEPHROLOGY",
+  "lines": [
+   [
+    "Tuesday",
+    "07:30 PM TO 08:30 PM"
+   ],
+   [
+    "Friday",
+    "08:00 PM TO 09:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "rabail-khan",
+  "name": "Dr. Rabail Khan",
+  "specialty": "Neuro Surgeon",
+  "dept": "neuro-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday, Wednesday & Friday",
+    "05:00 PM TO 06:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "muhammad-adil-khatri",
+  "name": "Dr. Muhamamd Adil Khatri",
+  "specialty": "Neuro Surgeon",
+  "dept": "neuro-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Thursday & Saturday",
+    "05:00 PM TO 06:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": [
+   "Dr. Muhammad Adil Khatri"
+  ]
+ },
+ {
+  "slug": "yahya-khan",
+  "name": "Dr. Yahya Khan",
+  "specialty": "Neuro Physician",
+  "dept": "neuro-physician",
+  "quals": "MBBS, DCN, MPH",
+  "lines": [
+   [
+    "Monday to Friday",
+    "06:30 PM TO 08:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "jay-parkash",
+  "name": "Dr. Jay Parkash",
+  "specialty": "Neuro Physician",
+  "dept": "neuro-physician",
+  "quals": "MBBS, DCN, MPH",
+  "lines": [
+   [
+    "Tuesday, Wednesday, Friday & Saturday",
+    "08:00 PM TO 09:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "rizwan-rasheed",
+  "name": "Dr. Rizwan Rasheed",
+  "specialty": "Ophthalmologist",
+  "dept": "opthalmologist-eye-specialist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday, Wednesday & Friday",
+    "03:30 PM TO 05:30 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "ghazala-tabassum",
+  "name": "Dr. Ghazala Tabassum",
+  "specialty": "Ophthalmologist",
+  "dept": "opthalmologist-eye-specialist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday",
+    "05:30 PM TO 07:30 PM"
+   ],
+   [
+    "Tuesday, Thursday & Saturday",
+    "03:30 PM TO 05:30 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "zeeshan-kamil",
+  "name": "Prof. Dr. Zeeshan Kamil",
+  "specialty": "Ophthalmologist",
+  "dept": "opthalmologist-eye-specialist",
+  "quals": "MBBS, FCPS, CRCP, CHPE, MCPS, FRCS(UK)",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "07:30 PM TO 09:30 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "muhammad-adnan",
+  "name": "Dr. Muhammad Adnan",
+  "specialty": "Ophthalmologist",
+  "dept": "opthalmologist-eye-specialist",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday, Thursday & Saturday",
+    "05:30 PM TO 07:30 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "shahla-dareshani",
+  "name": "Dr. Shahla Dareshani",
+  "specialty": "Ophthalmologist",
+  "dept": "opthalmologist-eye-specialist",
+  "quals": "MBBS, FCPS (ASST. PROF)",
+  "lines": [
+   [
+    "Wednesday & Friday",
+    "05:30 PM TO 07:30 PM"
+   ]
+  ],
+  "photo": false,
+  "aliases": []
+ },
+ {
+  "slug": "kashif-murtaza",
+  "name": "Dr. Kashif Murtaza",
+  "specialty": "Orthopedic Surgeon",
+  "dept": "orthopaedic-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday to Saturday",
+    "01:00 PM TO 03:00 PM"
+   ],
+   [
+    "Sunday",
+    "04:00 PM TO 06:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "altaf-hussain",
+  "name": "Dr. Altaf Hussain",
+  "specialty": "Orthopedic Surgeon",
+  "dept": "orthopaedic-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday, Wednesday, Thursday, Friday & Saturday",
+    "03:30 PM TO 05:30 PM"
+   ],
+   [
+    "Tuesday",
+    "03:30 PM TO 07:30 PM"
+   ],
+   [
+    "Sunday",
+    "06:00 PM TO 08:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "saeed-sheikh",
+  "name": "Prof. Dr. Saeed Sheikh",
+  "specialty": "Orthopedic Surgeon",
+  "dept": "orthopaedic-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday, Wednesday, Friday & Saturday",
+    "06:00 PM TO 07:30 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "sajjad-ali",
+  "name": "Dr. Sajjad Ali",
+  "specialty": "Orthopedic Surgeon",
+  "dept": "orthopaedic-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Monday, Wednesday & Friday",
+    "08:00 PM TO 10:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "mukesh-kumar",
+  "name": "Dr. Mukesh Kumar",
+  "specialty": "Orthopedic Surgeon",
+  "dept": "orthopaedic-surgeon",
+  "quals": "MBBS, MRCS (Ireland), MRCS (Edinburgh), FCPS, CHPE",
+  "lines": [
+   [
+    "Tuesday, Thursday & Saturday",
+    "08:00 PM TO 10:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "sm-tariq",
+  "name": "Dr. S.M. Tariq",
+  "specialty": "Orthopedic Surgeon",
+  "dept": "orthopaedic-surgeon",
+  "quals": "MBBS, MS",
+  "lines": [
+   [
+    "Tuesday, Thursday & Saturday",
+    "11:00 AM TO 12:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ },
+ {
+  "slug": "raheel-aslam",
+  "name": "Dr. Raheel Aslam",
+  "specialty": "Orthopedic Surgeon",
+  "dept": "orthopaedic-surgeon",
+  "quals": "MBBS, FCPS",
+  "lines": [
+   [
+    "Tuesday",
+    "06:00 PM TO 08:00 PM"
+   ],
+   [
+    "Sunday",
+    "02:00 PM TO 04:00 PM"
+   ]
+  ],
+  "photo": true,
+  "aliases": []
+ }
+]

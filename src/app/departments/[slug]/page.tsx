@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { PlaceholderBadge } from "@/components/Badge";
 import { Icon, departmentIcon } from "@/components/Icon";
 import { SectionHeading } from "@/components/SectionHeading";
+import { ServiceCard } from "@/components/ServiceCard";
 import { DoctorCard } from "@/components/DoctorCard";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
@@ -89,11 +90,8 @@ export default async function DepartmentPage({ params }: { params: Params }) {
           <div className="container">
             <SectionHeading id="dd-services" eyebrow="Services" title="Related services" />
             <ul className="service-grid">
-              {deptServices.map((s) => (
-                <li key={s.slug} className="service-card">
-                  <h3>{s.name}</h3>
-                  {s.summary ? <p className="muted small">{s.summary}</p> : null}
-                </li>
+              {deptServices.map((x) => (
+                <ServiceCard key={x.slug} service={x} />
               ))}
             </ul>
           </div>
