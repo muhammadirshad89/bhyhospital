@@ -1,0 +1,13 @@
+# Hero carousel update
+
+**Photos.** The homepage carousel now shows exactly six photographs, once each (`src/data/hero-slides.ts`): breast awareness seminar, CT scanner room, staff gathering (May 2026 banner), flag gathering in the courtyard, hospital ward visit, and White Coats Golden Hearts. Web copies are in `public/hero/` (2000 px wide, progressive JPEG, quality 82); the originals that were not already archived are in `design-assets/event-photos-original/` (prefix `hero-1.8-`). Alt text describes only what is visible. Autoplay, 5-second interval, fade, arrows, dots, keyboard control and reduced-motion behaviour are unchanged.
+
+The old carousel-only files `ribbon-cutting.jpg` and `sugar-check-counter.jpg` are no longer used anywhere and were left in `public/hero/` (delete them if you do not want them). `ward-group.jpg`, `staff-gathering-banner.jpg` and `ct-scan-room.jpg` are still used on the homepage, About page and CT Scan service page.
+
+**Desktop card (56rem / 896 px and up).** "Care, Community & Commitment" no longer sits on the photos. The photo stage is image only (arrows stay on it), the pagination dots sit directly under it, and the card sits in its own `#2746A6` band below, with the text on the left and the two buttons on the right (stacked on narrower desktop widths, below 72rem). Photos are shown whole (`object-fit: contain`) over a blurred copy of the same photo, so no group photo is cropped and every slide has the same stage size.
+
+**Mobile and tablet portrait (under 56rem).** No CSS rule that applies below 56rem was changed; the layout is the same as before (photo, then blue panel with the heading, text, buttons and dots). The only addition is a `.hc-bg { display: none }` rule for the desktop-only blurred backdrop.
+
+## Revision: four wide replacement photos
+
+Four slides were replaced in place (slide order unchanged) with newly supplied wide versions: breast awareness seminar, CT scanner room, White Coats (without the gold frame) and the ward visit. New files: `public/hero/breast-awareness-seminar-wide.jpg`, `ct-scanner-room-wide.jpg`, `white-coats-wide.jpg`, `hospital-ward-visit-wide.jpg` (2000 px wide, quality 82). The four replaced files were deleted from `public/hero/`, and the previous archived copies of the breast and White Coats photos were removed from `design-assets/event-photos-original/`. The new originals are archived there with the prefix `hero-1.8.1-`. Alt text for the White Coats and breast awareness slides was adjusted to match the new crops. No layout, CSS or component code was changed. The staff gathering and flag gathering slides are unchanged.

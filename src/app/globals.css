@@ -183,19 +183,39 @@ html { scroll-padding-top: 5.5rem; }
 .hc-dot span { width: 0.75rem; height: 0.75rem; border-radius: 50%; border: 2px solid var(--white); background: transparent; }
 .hc-dot[aria-current="true"] span { background: var(--white); }
 
+/* Desktop (56rem and up): the photo stage is image-only. The "Care, Community & Commitment" card sits in its own
+   band directly below the photos, so nothing is drawn over the photographs. Below 56rem nothing here applies. */
+.hc-bg { display: none; }
 @media (min-width: 56rem) {
-  .hc-stage { aspect-ratio: 16 / 7; max-height: 44rem; }
-  .hc-overlay { position: absolute; inset: 0; pointer-events: none; display: flex; align-items: flex-end; }
-  .hc-overlay-inner { width: 100%; grid-template-columns: minmax(0, 31rem) auto; justify-content: space-between; align-items: end; padding-block: 0 2rem; }
-  .hc-panel { pointer-events: auto; background: var(--blue); padding: 1.4rem 1.6rem 1.5rem; border-radius: var(--radius); box-shadow: 0 8px 28px rgba(23, 37, 84, 0.3); }
-  .hc-controls { pointer-events: auto; background: var(--blue); border-radius: 999px; padding: 0.25rem 0.75rem 0.25rem 0.25rem; box-shadow: 0 8px 28px rgba(23, 37, 84, 0.3); }
+  .hc-stage { width: 100%; aspect-ratio: 9 / 4; max-height: 44rem; }
+  .hc-bg { display: block; object-fit: cover; filter: blur(28px) saturate(1.1); transform: scale(1.2); opacity: 0.85; }
+  .hc-slide img.hc-photo { object-fit: contain !important; }
   .hc-arrow { width: 3rem; height: 3rem; }
-  .hc-dot { width: 2.25rem; }
   .hc-arrow--prev { left: 1.25rem; }
   .hc-arrow--next { right: 1.25rem; }
-}
-@media (min-width: 64rem) { .hc-overlay-inner { padding-bottom: 5rem; } }
 
+  .hc-overlay { background: var(--royal-deep); border-top: 1px solid rgba(255, 255, 255, 0.18); }
+  .hc-overlay-inner { grid-template-columns: minmax(0, 1fr); gap: 0.25rem; padding-block: 0.25rem 2.25rem; }
+  .hc-controls { order: -1; justify-self: center; background: none; padding: 0; }
+  .hc-dot { width: 2.25rem; }
+  .hc-panel {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1.75rem 2.25rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    border-left: 5px solid var(--white);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 30px rgba(23, 37, 84, 0.28);
+  }
+  .hc-panel h1 { grid-column: 1; font-size: clamp(1.9rem, 2.4vw, 2.4rem); }
+  .hc-panel p { grid-column: 1; }
+}
+/* Wide desktop: text on the left, buttons on the right of the same card. */
+@media (min-width: 72rem) {
+  .hc-panel { grid-template-columns: minmax(0, 1fr) auto; column-gap: 2.5rem; align-items: center; }
+  .hc-panel .actions { grid-column: 2; grid-row: 1 / span 3; margin: 0; justify-content: flex-end; }
+}
 
 /* Icons */
 .icon { flex: none; vertical-align: middle; }

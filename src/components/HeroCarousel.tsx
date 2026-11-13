@@ -94,7 +94,11 @@ export function HeroCarousel({ slides, heading, text, intervalMs = 5000 }: Props
               aria-label={`${i + 1} of ${count}`}
               aria-hidden={i === index ? undefined : true}
             >
+              {/* Desktop only (hidden by CSS on mobile): a soft blurred copy fills the stage so that the whole photo
+                  can be shown uncropped without empty bars. */}
+              <Image className="hc-bg" src={s.src} alt="" aria-hidden="true" fill sizes="25vw" quality={30} loading="lazy" />
               <Image
+                className="hc-photo"
                 src={s.src}
                 alt={s.alt}
                 fill
