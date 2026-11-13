@@ -47,9 +47,11 @@ describe("carousel component source", () => {
 });
 
 describe("Phase 1.8 hero photos and desktop card placement", () => {
+  // Display sequence: male group photos first, then the mixed staff gathering and the CT room,
+  // and the women's breast awareness event always last.
   const expected = [
-    "breast-awareness-seminar", "ct-scanner-room", "staff-gathering-may-2026",
     "flag-gathering-courtyard", "hospital-ward-visit", "white-coats-golden-hearts",
+    "staff-gathering-may-2026", "ct-scanner-room", "breast-awareness-seminar",
   ];
   it("shows exactly the six supplied photographs, once each, with descriptive alt text", () => {
     assert.deepEqual(HERO_SLIDES.map((s) => s.id), expected);
@@ -80,6 +82,14 @@ describe("Phase 1.8 hero photos and desktop card placement", () => {
     assert.ok(/\.hc-bg \{ display: none; \}/.test(css));
     assert.ok(/\.hc-stage \{ position: relative; aspect-ratio: 16 \/ 10;/.test(css));
     assert.ok(/\.hc-overlay-inner \{ display: grid; gap: 1rem; padding-block: 1.5rem 1.25rem; \}/.test(css));
+  });
+  it("shows the male group photos first and the breast awareness photo as the final slide", () => {
+    const ids = HERO_SLIDES.map((s) => s.id);
+    const maleGroups = ["flag-gathering-courtyard", "hospital-ward-visit", "white-coats-golden-hearts"];
+    const breast = ids.indexOf("breast-awareness-seminar");
+    assert.equal(breast, ids.length - 1);
+    assert.deepEqual(ids.slice(0, 3), maleGroups);
+    for (const id of maleGroups) assert.ok(ids.indexOf(id) < breast, id);
   });
   it("keeps the heading text", () => {
     assert.ok(fs.readFileSync(path.join(__dirname, "../src/data/hero-slides.ts"), "utf8").includes('"Care, Community & Commitment"'));

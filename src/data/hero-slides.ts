@@ -23,30 +23,6 @@ export const HERO_TEXT = "Begum Haji Yousuf Hospital, a project of Jamiyat Punja
 
 export const HERO_SLIDES: HeroSlide[] = [
   {
-    id: "breast-awareness-seminar",
-    src: "/hero/breast-awareness-seminar-wide.jpg",
-    width: 2000,
-    height: 887,
-    alt: "A group of women in pink and pastel outfits standing together in front of a pink banner for an event exclusively for women, with the B.H.Y. Hospital and JPSD logos.",
-    position: "50% 60%",
-  },
-  {
-    id: "ct-scanner-room",
-    src: "/hero/ct-scanner-room-wide.jpg",
-    width: 2000,
-    height: 887,
-    alt: "A Toshiba CT scanner and its examination table in a hospital scan room.",
-    position: "50% 45%",
-  },
-  {
-    id: "staff-gathering-may-2026",
-    src: "/hero/staff-gathering-may-2026.jpg",
-    width: 2000,
-    height: 887,
-    alt: "Hospital staff in navy scrubs and other clothing standing together under blue, pink and white balloons in front of a B.H.Y. Hospital and JPSD banner dated May 2026.",
-    position: "50% 40%",
-  },
-  {
     id: "flag-gathering-courtyard",
     src: "/hero/flag-gathering-courtyard.jpg",
     width: 2000,
@@ -69,5 +45,29 @@ export const HERO_SLIDES: HeroSlide[] = [
     height: 887,
     alt: "A group of men and women standing together in front of a B.H.Y. Hospital and JPSD backdrop with golden hearts and the words White Coats.",
     position: "50% 50%",
+  },
+  {
+    id: "staff-gathering-may-2026",
+    src: "/hero/staff-gathering-may-2026.jpg",
+    width: 2000,
+    height: 887,
+    alt: "Hospital staff in navy scrubs and other clothing standing together under blue, pink and white balloons in front of a B.H.Y. Hospital and JPSD banner dated May 2026.",
+    position: "50% 40%",
+  },
+  {
+    id: "ct-scanner-room",
+    src: "/hero/ct-scanner-room-wide.jpg",
+    width: 2000,
+    height: 887,
+    alt: "A Toshiba CT scanner and its examination table in a hospital scan room.",
+    position: "50% 45%",
+  },
+  {
+    id: "breast-awareness-seminar",
+    src: "/hero/breast-awareness-seminar-wide.jpg",
+    width: 2000,
+    height: 887,
+    alt: "A group of women in pink and pastel outfits standing together in front of a pink banner for an event exclusively for women, with the B.H.Y. Hospital and JPSD logos.",
+    position: "50% 60%",
   },
 ];
