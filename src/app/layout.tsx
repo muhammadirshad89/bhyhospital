@@ -8,6 +8,7 @@ import { siteUrl } from "@/lib/env";
 import { getDepartments } from "@/lib/repository";
 import { robotsFor } from "@/lib/seo";
 import "./globals.css";
+import Script from "next/script";
 
 const display = Newsreader({ subsets: ["latin"], variable: "--font-display", display: "swap" });
 const body = Public_Sans({ subsets: ["latin"], variable: "--font-body", display: "swap" });
@@ -46,6 +47,11 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
           {children}
         </main>
         <SiteFooter />
+        <Script
+  src="https://chatzy-kb-store.s3.amazonaws.com/icons/56706cc4-b3ba-4eba-9610-f2fb07008a5c"
+  id="e3cd3465-60b6-4a73-b34d-b0adc957934e"
+  strategy="afterInteractive"
+/>
       </body>
     </html>
   );
