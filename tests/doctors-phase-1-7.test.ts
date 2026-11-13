@@ -69,7 +69,7 @@ describe("Phase 1.7 name plates are published exactly", () => {
       }
     });
   }
-  it("has no duplicate people across all 101 doctors", () => {
+  it("has no duplicate people across all 103 doctors", () => {
     const norm = (n: string) => n.toLowerCase().replace(/^(prof\.? )?(dr\.? |ms\.? )?/, "").replace(/[^a-z]/g, "");
     const keys = verifiedDoctors.map((d) => norm(d.name));
     assert.equal(new Set(keys).size, verifiedDoctors.length);

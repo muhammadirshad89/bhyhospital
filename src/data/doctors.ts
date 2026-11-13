@@ -112,6 +112,21 @@ export const verifiedDoctors: Doctor[] = [
     status: published,
   },
   {
+    slug: "shahmeen-siddiqui",
+    name: "Dr. Shahmeen Siddiqui",
+    // Spelling used on the hospital's building board; the name plate (the source of truth) prints "Shahmeen".
+    aliases: ["Dr. Shameen Siddiqui"],
+    qualifications: ["MBBS", "DTCD"],
+    specialization: "Chest Specialist",
+    departmentSlug: "chest-specialist",
+    photo: "/doctors/shahmeen-siddiqui.jpg",
+    photoAlt: "Dr. Shahmeen Siddiqui – Chest Specialist at BHY Hospital",
+    // The name plate prints a time but no consultation days, so none are published (and no OPD weekdays are listed).
+    scheduleLines: [{ days: "", time: "08:00 PM TO 09:00 PM" }],
+    opd: [],
+    status: published,
+  },
+  {
     slug: "saifullah",
     name: "Dr. Saifullah",
     qualifications: ["MBBS", "FCPS"],
@@ -1074,6 +1089,19 @@ export const verifiedDoctors: Doctor[] = [
       { days: "Sunday", time: "07:00 PM TO 09:00 PM" },
     ],
     opd: merge(S(["Monday", "Thursday"], "13:00", "14:00"), S(["Sunday"], "19:00", "21:00")),
+    status: published,
+  },
+  {
+    slug: "zahida-somroo",
+    name: "Dr. Zahida Somroo",
+    qualifications: ["MBBS", "MCPS"],
+    specialization: "Gynaecologist",
+    departmentSlug: "gynaecologist",
+    photo: "/doctors/zahida-somroo.jpg",
+    photoAlt: "Dr. Zahida Somroo – Gynaecologist at BHY Hospital",
+    // The name plate prints a time but no consultation days, so none are published (and no OPD weekdays are listed).
+    scheduleLines: [{ days: "", time: "05:00 PM TO 08:00 PM (Pre-Appointment Available)" }],
+    opd: [],
     status: published,
   },
   {

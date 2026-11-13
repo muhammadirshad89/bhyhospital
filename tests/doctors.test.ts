@@ -77,8 +77,9 @@ describe("published doctors match the supplied cards", () => {
   it("publishes exactly the 47 original carded doctors plus the Phase 1.7 plates and no placeholders", async () => {
     const list = await getDoctors();
     const plates = JSON.parse(fs.readFileSync(path.join(__dirname, "fixtures/phase-1-7-plates.json"), "utf8")) as { slug: string }[];
-    assert.deepEqual(list.map((d) => d.slug).sort(), [...Object.keys(CARDS), ...plates.map((p) => p.slug)].sort());
-    assert.equal(list.length, 101);
+    const later = ["zahida-somroo", "shahmeen-siddiqui"]; // added from name plates after Phase 1.7 (see tests/doctors-update.test.ts)
+    assert.deepEqual(list.map((d) => d.slug).sort(), [...Object.keys(CARDS), ...plates.map((p) => p.slug), ...later].sort());
+    assert.equal(list.length, 103);
     assert.ok(list.every((d) => !d.isPlaceholder && d.status.verified && d.status.approved));
   });
   for (const [slug, card] of Object.entries(CARDS)) {
@@ -131,7 +132,7 @@ describe("published doctors match the supplied cards", () => {
   it("filters by department and name", async () => {
     const all = await getDoctors();
     assert.equal(filterDoctors(all, { department: "cardiologist" }).length, 3);
-    assert.equal(filterDoctors(all, { department: "chest-specialist" }).length, 4);
+    assert.equal(filterDoctors(all, { department: "chest-specialist" }).length, 5);
     assert.equal(filterDoctors(all, { department: "dermatologist" }).length, 6);
     assert.equal(filterDoctors(all, { department: "dental-surgeon" }).length, 3);
     assert.equal(filterDoctors(all, { department: "dental-maxillofacial-surgeon" }).length, 2);

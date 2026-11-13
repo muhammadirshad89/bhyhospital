@@ -48,7 +48,7 @@ export function DoctorCard({ doctor, departmentName }: { doctor: Doctor; departm
               <li key={`${l.days}-${l.time}`}>
                 <Icon name="clock" size={16} />
                 <span>
-                  <strong>{l.days}</strong>
+                  {l.days ? <strong>{l.days}</strong> : null}
                   <span className="time">{l.time}</span>
                 </span>
               </li>

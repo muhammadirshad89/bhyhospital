@@ -355,6 +355,7 @@ input[type="search"]:hover, select:hover { border-color: var(--royal); }
 .dept-intro { display: grid; gap: 1.25rem; align-items: start; }
 @media (min-width: 40rem) { .dept-intro { grid-template-columns: auto 1fr; gap: 1.75rem; } }
 .dept-intro p { max-width: 60ch; }
+.dept-intro > div > .actions:first-child { margin-top: 0; }
 
 /* Service cards */
 .service-grid { list-style: none; padding: 0; margin: 0; display: grid; gap: 1rem; grid-template-columns: repeat(auto-fill, minmax(min(100%, 13.5rem), 1fr)); }

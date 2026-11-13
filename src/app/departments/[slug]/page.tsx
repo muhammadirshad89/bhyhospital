@@ -54,7 +54,7 @@ export default async function DepartmentPage({ params }: { params: Params }) {
           </span>
           <div>
             {dept.isPlaceholder ? <PlaceholderBadge>Placeholder department</PlaceholderBadge> : null}
-            <p>{dept.description || "More details about this department will be added once the hospital confirms them."}</p>
+            {dept.description ? <p>{dept.description}</p> : null}
             <p className="actions">
               <Link className="btn btn--solid" href="/opd-schedule">
                 <Icon name="calendar" size={18} /> View OPD schedule

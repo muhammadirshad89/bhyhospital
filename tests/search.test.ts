@@ -41,7 +41,7 @@ describe("doctor name search", () => {
   });
   it("finds every published doctor by their own full name", async () => {
     const all = await getDoctors();
-    assert.equal(all.length, 101);
+    assert.equal(all.length, 103);
     for (const d of all) assert.ok((await names(d.name)).includes(d.name), d.name);
     for (const d of all) assert.ok((await names(d.name.toUpperCase())).includes(d.name), d.name + " (upper)");
   });
@@ -51,7 +51,7 @@ describe("doctor name search", () => {
   });
   it("searches qualifications, listing name matches first", async () => {
     const dtcd = await names("dtcd");
-    assert.deepEqual(dtcd, ["Dr. Muhammad Raza"]);
+    assert.deepEqual([...dtcd].sort(), ["Dr. Muhammad Raza", "Dr. Shahmeen Siddiqui"]);
     const fcps = await names("fcps");
     assert.ok(fcps.length >= 5 && fcps.includes("Dr. Rajesh") && fcps.includes("Dr. Saifullah"));
     const diab = await names("diab");
@@ -94,7 +94,7 @@ describe("doctor name search", () => {
   it("returns nothing for names that do not exist and everything for an empty query", async () => {
     assert.deepEqual(await names("zzzz"), []);
     assert.deepEqual(await names("lal zzzz"), []);
-    assert.equal((await names("   ")).length, 101);
+    assert.equal((await names("   ")).length, 103);
   });
   it("normalizes punctuation and case", () => {
     assert.equal(normalize("  Dr.  LAL-Kumar "), "dr lal kumar");

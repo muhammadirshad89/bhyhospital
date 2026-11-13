@@ -104,7 +104,7 @@ export default async function DoctorPage({ params }: { params: Params }) {
                         <Icon name="calendar" size={20} />
                       </span>
                       <span>
-                        <strong>{l.days}</strong>
+                        {l.days ? <strong>{l.days}</strong> : null}
                         <span className="time">
                           <Icon name="clock" size={15} /> {l.time}
                         </span>
