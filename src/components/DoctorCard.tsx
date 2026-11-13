@@ -10,7 +10,7 @@ export function DoctorPhoto({ doctor, priority = false }: { doctor: Doctor; prio
       <Image
         className="doctor-photo"
         src={doctor.photo}
-        alt={`Portrait of ${doctor.name}`}
+        alt={doctor.photoAlt ?? `Portrait of ${doctor.name}`}
         width={266}
         height={266}
         sizes="(min-width: 64rem) 280px, (min-width: 40rem) 33vw, 80vw"
@@ -40,7 +40,7 @@ export function DoctorCard({ doctor, departmentName }: { doctor: Doctor; departm
             {doctor.name}
           </Link>
         </h3>
-        <p className="doctor-quals">{doctor.qualifications.length ? doctor.qualifications.join(", ") : "Qualifications to be confirmed"}</p>
+        {doctor.qualifications.length ? <p className="doctor-quals">{doctor.qualifications.join(", ")}</p> : null}
         {departmentName && departmentName !== doctor.specialization ? <p className="small muted">{departmentName}</p> : null}
         {doctor.scheduleLines.length ? (
           <ul className="doctor-schedule" aria-label={`Consultation timings of ${doctor.name}`}>

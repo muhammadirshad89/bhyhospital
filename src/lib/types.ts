@@ -43,6 +43,8 @@ export interface Doctor {
   departmentSlug: string | null;
   /** Path under /public or an absolute https URL. null shows a neutral "photo pending" image. */
   photo: string | null;
+  /** Optional custom alt text for the photo. Defaults to "Portrait of <name>". */
+  photoAlt?: string;
   bio?: string;
   /** Consultation days and times exactly as printed on the hospital's doctor card. */
   scheduleLines: { days: string; time: string }[];

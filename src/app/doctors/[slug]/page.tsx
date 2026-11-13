@@ -78,10 +78,12 @@ export default async function DoctorPage({ params }: { params: Params }) {
                   <dt>Specialty</dt>
                   <dd>{doctor.specialization ?? <Tbc />}</dd>
                 </div>
-                <div>
-                  <dt>Qualifications</dt>
-                  <dd>{doctor.qualifications.length ? doctor.qualifications.join(", ") : <Tbc />}</dd>
-                </div>
+                {doctor.qualifications.length ? (
+                  <div>
+                    <dt>Qualifications</dt>
+                    <dd>{doctor.qualifications.join(", ")}</dd>
+                  </div>
+                ) : null}
                 <div>
                   <dt>Department</dt>
                   <dd>{department ? <Link href={`/departments/${department.slug}`}>

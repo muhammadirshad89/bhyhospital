@@ -1067,7 +1067,8 @@ export const verifiedDoctors: Doctor[] = [
     qualifications: ["MBBS", "MCPS"],
     specialization: "Gynaecologist",
     departmentSlug: "gynaecologist",
-    photo: null,
+    photo: "/doctors/dr-rabia-saleem.jpg",
+    photoAlt: "Dr. Rabia Saleem – Gynaecologist at BHY Hospital",
     scheduleLines: [
       { days: "Monday & Thursday", time: "01:00 PM TO 02:00 PM" },
       { days: "Sunday", time: "07:00 PM TO 09:00 PM" },

@@ -75,9 +75,28 @@ describe("Phase 1.7 name plates are published exactly", () => {
     assert.equal(new Set(keys).size, verifiedDoctors.length);
     assert.equal(new Set(verifiedDoctors.map((d) => d.slug)).size, verifiedDoctors.length);
   });
-  it("cartoon-avatar cards publish no photo, as do plates without photos", () => {
-    for (const slug of ["sidra-mustaqeem", "farah-anum-jameel", "shahla-dareshani", "afshan-javed", "rabia-saleem", "farah-naz"]) {
+  it("cartoon-avatar cards publish no photo, as do plates without photos (Dr. Rabia Saleem now has a real photo, Phase 1.7.1)", () => {
+    for (const slug of ["sidra-mustaqeem", "farah-anum-jameel", "shahla-dareshani", "afshan-javed", "farah-naz"]) {
       assert.equal(verifiedDoctors.find((d) => d.slug === slug)?.photo, null, slug);
+    }
+  });
+  it("Dr. Rabia Saleem has her photo and alt text, and her other details are unchanged (Phase 1.7.1)", async () => {
+    const d = verifiedDoctors.find((x) => x.slug === "rabia-saleem")!;
+    assert.equal(d.photo, "/doctors/dr-rabia-saleem.jpg");
+    assert.equal(d.photoAlt, "Dr. Rabia Saleem – Gynaecologist at BHY Hospital");
+    assert.deepEqual(d.qualifications, ["MBBS", "MCPS"]);
+    assert.equal(d.departmentSlug, "gynaecologist");
+    assert.equal(verifiedDoctors.filter((x) => x.slug === "rabia-saleem" || /rabia saleem/i.test(x.name)).length, 1);
+    const { access } = await import("node:fs/promises");
+    await access("public/doctors/dr-rabia-saleem.jpg");
+  });
+  it("the Sonologist profiles show no qualification placeholder (Phase 1.7.1)", async () => {
+    const { readFile } = await import("node:fs/promises");
+    const sono = verifiedDoctors.filter((x) => x.departmentSlug === "sonologist");
+    assert.equal(sono.length, 5);
+    for (const d of sono) assert.deepEqual(d.qualifications, [], d.slug);
+    for (const f of ["src/components/DoctorCard.tsx", "src/app/doctors/[slug]/page.tsx"]) {
+      assert.ok(!/Qualifications to be confirmed/.test(await readFile(f, "utf8")), f);
     }
   });
   it("every department now has at least one doctor", () => {
