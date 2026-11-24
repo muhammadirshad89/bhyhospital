@@ -9,11 +9,16 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { CONTACT } from "@/data/site";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
+import { LeaveNotice } from "@/components/LeaveNotice";
+import { getPublicLeaveNotices } from "@/lib/leave/public";
 import { getDepartmentBySlug, getDoctorBySlug, getDoctors } from "@/lib/repository";
 import { pageMetadata } from "@/lib/seo";
 import { breadcrumbJsonLd, physicianJsonLd } from "@/lib/structured-data";
 
 type Params = Promise<{ slug: string }>;
+
+/** Re-generated at least every minute so doctor leave notices appear and expire without a new deployment. */
+export const revalidate = 60;
 
 export async function generateStaticParams() {
   return (await getDoctors()).map((d) => ({ slug: d.slug }));
@@ -35,6 +40,7 @@ export default async function DoctorPage({ params }: { params: Params }) {
   const { slug } = await params;
   const doctor = await getDoctorBySlug(slug);
   if (!doctor) notFound();
+  const leaves = await getPublicLeaveNotices();
   const department = doctor.departmentSlug ? await getDepartmentBySlug(doctor.departmentSlug) : undefined;
   const colleagues = doctor.departmentSlug
     ? (await getDoctors()).filter((d) => d.departmentSlug === doctor.departmentSlug && d.slug !== doctor.slug)
@@ -71,6 +77,7 @@ export default async function DoctorPage({ params }: { params: Params }) {
           </aside>
 
           <div className="profile-body">
+            {leaves[doctor.slug] ? <LeaveNotice leave={leaves[doctor.slug]} doctorName={doctor.name} variant="banner" /> : null}
             <div className="panel">
               <h2 className="h3">Professional details</h2>
               <dl className="facts">
@@ -135,7 +142,7 @@ export default async function DoctorPage({ params }: { params: Params }) {
             <SectionHeading id="more-title" title={`More in ${department?.name ?? "this department"}`} />
             <div className="doctor-grid">
               {colleagues.map((d) => (
-                <DoctorCard key={d.slug} doctor={d} departmentName={null} />
+                <DoctorCard key={d.slug} doctor={d} departmentName={null} leave={leaves[d.slug]} />
               ))}
             </div>
           </div>

@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BHY Chatbot – Test Page</title>
+<style>body{font-family:system-ui,sans-serif;max-width:760px;margin:24px auto;padding:0 16px;line-height:1.5}
+fieldset{border:1px solid #ccd;border-radius:8px;margin:16px 0}button.q{margin:3px;padding:5px 10px;border:1px solid #0b4fa8;background:#fff;color:#0b4fa8;border-radius:999px;cursor:pointer}
+code{background:#eef;padding:1px 4px;border-radius:4px}</style></head>
+<body>
+<h1>BHY Hospital – chatbot test page</h1>
+<p>Open the chat with the logo button at the bottom right. This page is for testing only; it does not change your website.</p>
+<p>This page imitates a normal website. The chatbot is only the small round logo button at the bottom right; the chat window opens only when you click it.</p>
+<fieldset><legend>Simulate Pakistan date and time (test only)</legend>
+<label>Date <input type="date" id="d" value="2026-11-20"></label>
+<label>Time <input type="time" id="t" value="16:30"></label>
+<button id="a">Apply</button> <button id="r">Use real time</button>
+<p id="s">Using real Pakistan time.</p></fieldset>
+<fieldset><legend>Sample questions (click to send)</legend><div id="qs"></div></fieldset>
+<script>
+document.getElementById('a').onclick=function(){var v=document.getElementById('d').value.split('-'),t=document.getElementById('t').value.split(':');
+ var dt=new Date(Date.UTC(+v[0],+v[1]-1,+v[2]));window.__bhyNow={y:+v[0],m:+v[1],d:+v[2],wd:dt.getUTCDay(),min:+t[0]*60+ +t[1]};
+ document.getElementById('s').textContent='Simulated: '+document.getElementById('d').value+' '+document.getElementById('t').value+' (PKT)';};
+document.getElementById('r').onclick=function(){delete window.__bhyNow;document.getElementById('s').textContent='Using real Pakistan time.';};
+['Who is the cardiologist at BHY Hospital?','BHY Hospital mein dil ka doctor kaun hai?','بی ایچ وائی ہسپتال میں دل کے ڈاکٹر کون ہیں؟','Skin specialist kaun hain?','Monday ko orthopedic doctor kaun available hain?','Saturday ko gynecologist ki timing kya hai?','Dr. Lal Kumar kis din OPD mein hotay hain?','Dr Lal Kumar qualification','ENT specialist ki OPD kab hoti hai?','Aaj kaun se doctors available hain?','Kal kis specialist ki OPD hogi?','Sunday ko kaun se doctors aate hain?','What is BHY Hospital?','CT Scan availability','Paeds vaccination timings','Hospital se rabta kese karen?','oncologist kaun hai?','dialysis charges','I have chest pain'].forEach(function(q){
+ var b=document.createElement('button');b.className='q';b.textContent=q;b.onclick=function(){var h=document.getElementById('bhy-chatbot');if(!h)return;var r=h.shadowRoot;if(!r.querySelector('.panel.on'))r.getElementById('o').click();r.getElementById('i').value=q;r.getElementById('g').click();};document.getElementById('qs').appendChild(b);});
+</script>
+<script src="bhy-chatbot.js" defer></script>
+</body></html>

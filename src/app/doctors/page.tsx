@@ -1,5 +1,6 @@
 import { DoctorDirectory } from "@/components/DoctorDirectory";
 import { PageHeader } from "@/components/PageHeader";
+import { getPublicLeaveNotices } from "@/lib/leave/public";
 import { getDepartments, getDoctors } from "@/lib/repository";
 import { pageMetadata } from "@/lib/seo";
 
@@ -18,7 +19,7 @@ export default async function DoctorsPage({ searchParams }: { searchParams: Sear
   const q = first(sp.q)?.slice(0, 80) ?? "";
   const department = first(sp.department) ?? "";
 
-  const [doctors, departments] = await Promise.all([getDoctors(), getDepartments()]);
+  const [doctors, departments, leaves] = await Promise.all([getDoctors(), getDepartments(), getPublicLeaveNotices()]);
   const knownDepartment = departments.some((d) => d.slug === department) ? department : "";
 
   return (
@@ -36,6 +37,7 @@ export default async function DoctorsPage({ searchParams }: { searchParams: Sear
             departments={departments.map((d) => ({ slug: d.slug, name: d.name }))}
             initialQuery={q}
             initialDepartment={knownDepartment}
+            leaves={leaves}
           />
         </div>
       </section>

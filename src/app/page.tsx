@@ -12,6 +12,7 @@ import { SpecialistTabs } from "@/components/SpecialistTabs";
 import { SundayOpdSection } from "@/components/SundayOpdSection";
 import { HERO_HEADING, HERO_SLIDES, HERO_TEXT } from "@/data/hero-slides";
 import { CONTACT, SITE } from "@/data/site";
+import { getPublicLeaveNotices } from "@/lib/leave/public";
 import { getDepartments, getDoctors, getServices } from "@/lib/repository";
 import { pageMetadata } from "@/lib/seo";
 import { hospitalJsonLd } from "@/lib/structured-data";
@@ -21,6 +22,9 @@ export const metadata = pageMetadata({
   description: `Find doctors, departments, services and OPD schedules at ${SITE.name}, a project of ${SITE.organizationFull}.`,
   path: "/",
 });
+
+/** Re-generated at least every minute so doctor leave notices appear and expire without a new deployment. */
+export const revalidate = 60;
 
 /** The home page shows the first few doctors of each specialty; the directory lists everyone. */
 const HOME_GROUP_LIMIT = 4;
@@ -33,7 +37,7 @@ const QUICK: { href: string; title: string; text: string; icon: IconName; extern
 ];
 
 export default async function HomePage() {
-  const [doctors, departments, services] = await Promise.all([getDoctors(), getDepartments(), getServices()]);
+  const [doctors, departments, services, leaves] = await Promise.all([getDoctors(), getDepartments(), getServices(), getPublicLeaveNotices()]);
 
   // One tab per department that has published doctors, in the workbook's department order.
   const groups = departments
@@ -117,7 +121,7 @@ export default async function HomePage() {
               hrefLabel={`All ${doctors.length} doctors`}
             />
           </Reveal>
-          <SpecialistTabs groups={groups} />
+          <SpecialistTabs groups={groups} leaves={leaves} />
         </div>
       </section>
 

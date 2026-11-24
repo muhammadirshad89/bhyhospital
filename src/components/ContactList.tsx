@@ -1,4 +1,4 @@
-import { CONTACT, OPD_HOURS } from "@/data/site";
+import { CONTACT, OPD_HOURS, WHATSAPP, whatsappHref } from "@/data/site";
 
 /** UAN, phone and address. The address opens the official Google Maps link in a new tab. */
 export function ContactList({ className = "" }: { className?: string }) {
@@ -14,6 +14,15 @@ export function ContactList({ className = "" }: { className?: string }) {
         <dt>Phone</dt>
         <dd>
           <a href={CONTACT.phoneHref}>{CONTACT.phone}</a>
+        </dd>
+      </div>
+      <div>
+        <dt>WhatsApp</dt>
+        <dd>
+          <a href={whatsappHref()} target="_blank" rel="noopener noreferrer">
+            {WHATSAPP.display}
+            <span className="visually-hidden"> (opens WhatsApp in a new tab)</span>
+          </a>
         </dd>
       </div>
       <div>

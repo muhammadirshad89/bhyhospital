@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
+import type { PublicLeaveNotice } from "@/lib/leave/types";
 import { filterDoctors } from "@/lib/search";
 import type { Doctor } from "@/lib/types";
 import { BreakableName } from "./BreakableName";
@@ -22,11 +23,13 @@ export function DoctorDirectory({
   departments,
   initialQuery,
   initialDepartment,
+  leaves = {},
 }: {
   doctors: Doctor[];
   departments: DirectoryDepartment[];
   initialQuery: string;
   initialDepartment: string;
+  leaves?: Record<string, PublicLeaveNotice>;
 }) {
   const [q, setQ] = useState(initialQuery);
   const [department, setDepartment] = useState(initialDepartment);
@@ -151,7 +154,7 @@ export function DoctorDirectory({
       {results.length ? (
         <div className="doctor-grid">
           {results.map((d) => (
-            <DoctorCard key={d.slug} doctor={d} departmentName={d.departmentSlug ? deptName.get(d.departmentSlug) : null} />
+            <DoctorCard key={d.slug} doctor={d} departmentName={d.departmentSlug ? deptName.get(d.departmentSlug) : null} leave={leaves[d.slug]} />
           ))}
         </div>
       ) : (

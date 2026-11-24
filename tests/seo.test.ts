@@ -29,7 +29,7 @@ describe("indexing controls (public launch defaults)", () => {
     process.env.NEXT_PUBLIC_SITE_URL = "https://hospital.example";
     assert.equal(robotsFor(), undefined);
     const r = robots();
-    assert.deepEqual(r.rules, [{ userAgent: "*", allow: "/" }]);
+    assert.deepEqual(r.rules, [{ userAgent: "*", allow: "/", disallow: "/admin" }]); // /admin is private and kept out of crawlers
     assert.equal(r.sitemap, "https://hospital.example/sitemap.xml");
   });
   it("can still be blocked deliberately with SITE_NOINDEX=true", () => {
@@ -102,7 +102,7 @@ describe("structured data", () => {
   it("never emits Physician data for placeholders", () => {
     process.env.NEXT_PUBLIC_SITE_URL = "https://hospital.example";
     const status = { verified: true, active: true, approved: true, deleted: false };
-    const base = { slug: "x", name: "X", qualifications: [], specialization: null, departmentSlug: null, photo: null, opd: [], status };
+    const base = { slug: "x", name: "X", qualifications: [], specialization: null, departmentSlug: null, photo: null, scheduleLines: [], opd: [], status };
     assert.equal(physicianJsonLd({ ...base, isPlaceholder: true }), null);
     assert.ok(physicianJsonLd(base));
   });

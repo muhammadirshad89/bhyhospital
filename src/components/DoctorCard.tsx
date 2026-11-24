@@ -1,8 +1,10 @@
 import Image from "next/image";
 import Link from "next/link";
+import type { PublicLeaveNotice } from "@/lib/leave/types";
 import type { Doctor } from "@/lib/types";
 import { PlaceholderBadge } from "./Badge";
 import { Icon } from "./Icon";
+import { LeaveNotice } from "./LeaveNotice";
 
 export function DoctorPhoto({ doctor, priority = false }: { doctor: Doctor; priority?: boolean }) {
   if (doctor.photo) {
@@ -26,13 +28,14 @@ export function DoctorPhoto({ doctor, priority = false }: { doctor: Doctor; prio
   );
 }
 
-export function DoctorCard({ doctor, departmentName }: { doctor: Doctor; departmentName?: string | null }) {
+export function DoctorCard({ doctor, departmentName, leave }: { doctor: Doctor; departmentName?: string | null; leave?: PublicLeaveNotice | null }) {
   return (
-    <article className="doctor-card">
+    <article className={leave?.state === "ongoing" ? "doctor-card doctor-card--on-leave" : "doctor-card"}>
       <div className="doctor-card-photo">
         <DoctorPhoto doctor={doctor} />
       </div>
       <div className="doctor-card-body">
+        {leave ? <LeaveNotice leave={leave} doctorName={doctor.name} /> : null}
         {doctor.isPlaceholder ? <PlaceholderBadge /> : null}
         {doctor.specialization ? <p className="pill">{doctor.specialization}</p> : null}
         <h3>

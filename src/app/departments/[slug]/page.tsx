@@ -6,6 +6,7 @@ import { Icon, departmentIcon } from "@/components/Icon";
 import { SectionHeading } from "@/components/SectionHeading";
 import { ServiceCard } from "@/components/ServiceCard";
 import { DoctorCard } from "@/components/DoctorCard";
+import { getPublicLeaveNotices } from "@/lib/leave/public";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
 import { getDepartmentBySlug, getDepartments, getDoctors, getServices } from "@/lib/repository";
@@ -13,6 +14,9 @@ import { pageMetadata } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/structured-data";
 
 type Params = Promise<{ slug: string }>;
+
+/** Re-generated at least every minute so doctor leave notices appear and expire without a new deployment. */
+export const revalidate = 60;
 
 export async function generateStaticParams() {
   return (await getDepartments()).map((d) => ({ slug: d.slug }));
@@ -33,7 +37,7 @@ export default async function DepartmentPage({ params }: { params: Params }) {
   const { slug } = await params;
   const dept = await getDepartmentBySlug(slug);
   if (!dept) notFound();
-  const [doctors, services] = await Promise.all([getDoctors(), getServices()]);
+  const [doctors, services, leaves] = await Promise.all([getDoctors(), getServices(), getPublicLeaveNotices()]);
   const deptDoctors = doctors.filter((d) => d.departmentSlug === dept.slug);
   const deptServices = services.filter((s) => s.departmentSlugs.includes(dept.slug));
 
@@ -73,7 +77,7 @@ export default async function DepartmentPage({ params }: { params: Params }) {
           {deptDoctors.length ? (
             <div className="doctor-grid">
               {deptDoctors.map((d) => (
-                <DoctorCard key={d.slug} doctor={d} departmentName={null} />
+                <DoctorCard key={d.slug} doctor={d} departmentName={null} leave={leaves[d.slug]} />
               ))}
             </div>
           ) : (

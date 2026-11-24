@@ -1,9 +1,11 @@
 import type { ReactNode } from "react";
 import type { Metadata, Viewport } from "next";
 import { Newsreader, Public_Sans } from "next/font/google";
-import { ChatzyWidget } from "@/components/ChatzyWidget";
+import { BhyChatbot } from "@/components/BhyChatbot";
+import { HideOnAdmin } from "@/components/HideOnAdmin";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { WhatsAppFloat } from "@/components/WhatsAppFloat";
 import { SITE } from "@/data/site";
 import { siteUrl } from "@/lib/env";
 import { getDepartments } from "@/lib/repository";
@@ -42,12 +44,17 @@ export default async function RootLayout({ children }: { children: ReactNode }) 
         <a href="#main" className="skip-link">
           Skip to main content
         </a>
-        <SiteHeader departments={departments} />
+        <HideOnAdmin>
+          <SiteHeader departments={departments} />
+        </HideOnAdmin>
         <main id="main" tabIndex={-1}>
           {children}
         </main>
-        <SiteFooter />
-        <ChatzyWidget />
+        <HideOnAdmin>
+          <SiteFooter />
+          <WhatsAppFloat />
+        </HideOnAdmin>
+        <BhyChatbot />
       </body>
     </html>
   );

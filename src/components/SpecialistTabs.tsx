@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useRef, useState, type KeyboardEvent } from "react";
+import type { PublicLeaveNotice } from "@/lib/leave/types";
 import type { Doctor } from "@/lib/types";
 import { DoctorCard } from "./DoctorCard";
 import { Icon } from "./Icon";
@@ -18,7 +19,7 @@ export interface SpecialtyGroup {
  * Home page specialist browser: one tab per department that has doctors.
  * Tabs follow the WAI-ARIA tab pattern (arrow keys, Home and End); each panel links to the full list for that department.
  */
-export function SpecialistTabs({ groups }: { groups: SpecialtyGroup[] }) {
+export function SpecialistTabs({ groups, leaves = {} }: { groups: SpecialtyGroup[]; leaves?: Record<string, PublicLeaveNotice> }) {
   const [active, setActive] = useState(0);
   const tabRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const group = groups[active] ?? groups[0];
@@ -63,7 +64,7 @@ export function SpecialistTabs({ groups }: { groups: SpecialtyGroup[] }) {
       <div id="spec-panel" role="tabpanel" aria-labelledby={`spec-tab-${group.slug}`} className="spec-panel">
         <div className="doctor-grid">
           {group.doctors.map((d) => (
-            <DoctorCard key={d.slug} doctor={d} departmentName={null} />
+            <DoctorCard key={d.slug} doctor={d} departmentName={null} leave={leaves[d.slug]} />
           ))}
         </div>
         <p className="spec-more">

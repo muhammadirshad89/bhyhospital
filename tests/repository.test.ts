@@ -14,6 +14,7 @@ function doctor(over: Partial<Doctor> = {}): Doctor {
     qualifications: [],
     specialization: null,
     departmentSlug: null,
+    scheduleLines: [],
     photo: null,
     opd: [],
     status: ok,

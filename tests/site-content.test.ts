@@ -29,7 +29,7 @@ describe("official contact details", () => {
     assert.deepEqual(SOCIAL_LINKS.map((s) => s.href), ["https://www.facebook.com/bhyhospitalpk/", "https://www.instagram.com/bhyhospitalpk/"]);
   });
   it("keeps all page routes in the navigation", () => {
-    const hrefs = NAV_LINKS.map((l) => l.href);
+    const hrefs: string[] = NAV_LINKS.map((l) => l.href);
     for (const h of ["/doctors", "/departments", "/services", "/opd-schedule", "/about", "/contact"]) assert.ok(hrefs.includes(h), h);
   });
   it("keeps the developer credit separate and unchanged", () => {

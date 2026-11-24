@@ -86,3 +86,23 @@ export const OPD_HOURS = {
   open: "08:00",
   close: "22:00",
 } as const;
+
+/**
+ * OFFICIAL WhatsApp number of BHY Hospital (supplied by the hospital). Click-to-chat only: the button opens a normal
+ * WhatsApp chat with the hospital's number. There is no chatbot or automation behind it. Use these constants everywhere
+ * so the number can never differ between pages.
+ */
+export const WHATSAPP = {
+  /** As written in Pakistan. */
+  display: "0349-5053717",
+  /** International format without "+" (country code 92), as wa.me requires. */
+  international: "923495053717",
+  url: "https://wa.me/923495053717",
+  message: "Assalam-o-Alaikum, I would like to contact BHY Hospital.",
+  label: "Chat with BHY Hospital on WhatsApp",
+} as const;
+
+/** The official click-to-chat link with the short pre-filled greeting. */
+export function whatsappHref(message: string = WHATSAPP.message): string {
+  return `${WHATSAPP.url}?text=${encodeURIComponent(message)}`;
+}

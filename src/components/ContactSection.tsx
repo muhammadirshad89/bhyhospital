@@ -1,6 +1,8 @@
-import { CONTACT, OPD_HOURS } from "@/data/site";
+import { CONTACT, OPD_HOURS, WHATSAPP, whatsappHref } from "@/data/site";
 import { Icon } from "./Icon";
 import { SocialLinks } from "./SocialLinks";
+import { WhatsAppButton } from "./WhatsAppButton";
+import { WhatsAppIcon } from "./WhatsAppIcon";
 
 /**
  * Compact contact and location block used on the home page and the Contact Us page.
@@ -30,6 +32,19 @@ export function ContactSection() {
             <a className="contact-value" href={CONTACT.phoneHref}>
               {CONTACT.phone}
             </a>
+          </div>
+        </li>
+        <li className="contact-card contact-card--whatsapp">
+          <span className="icon-chip icon-chip--whatsapp" aria-hidden="true">
+            <WhatsAppIcon size={22} />
+          </span>
+          <div>
+            <span className="contact-label">WhatsApp</span>
+            <a className="contact-value" href={whatsappHref()} target="_blank" rel="noopener noreferrer">
+              {WHATSAPP.display}
+              <span className="visually-hidden"> (opens WhatsApp in a new tab)</span>
+            </a>
+            <WhatsAppButton className="btn--sm" />
           </div>
         </li>
         <li className="contact-card">

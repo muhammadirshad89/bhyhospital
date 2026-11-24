@@ -7,6 +7,8 @@ import { CONTACT, OPD_HOURS } from "@/data/site";
 import { SUNDAY_OPD } from "@/data/sunday-opd";
 import { groupOpdByDay } from "@/lib/opd";
 import { getDoctors, getScheduleNotices } from "@/lib/repository";
+import { getPublicLeaveNotices } from "@/lib/leave/public";
+import { leaveLabel, leaveSentence } from "@/lib/leave/notice-text";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -15,8 +17,11 @@ export const metadata = pageMetadata({
   path: "/opd-schedule",
 });
 
+/** Re-generated at least every minute so doctor leave notices appear and expire without a new deployment. */
+export const revalidate = 60;
+
 export default async function OpdSchedulePage() {
-  const [doctors, notices] = await Promise.all([getDoctors(), getScheduleNotices()]);
+  const [doctors, notices, leaves] = await Promise.all([getDoctors(), getScheduleNotices(), getPublicLeaveNotices()]);
   const days = groupOpdByDay(doctors);
   const anyConfirmed = days.some((d) => d.entries.length > 0);
 
@@ -104,6 +109,11 @@ export default async function OpdSchedulePage() {
                           <div>
                             <Link href={`/doctors/${doctor.slug}`}>{doctor.name}</Link> {doctor.isPlaceholder ? <PlaceholderBadge /> : null}
                             <div className="small muted">{doctor.specialization ?? "Specialization to be confirmed"}</div>
+                            {leaves[doctor.slug] ? (
+                              <div className={`leave-note leave-note--${leaves[doctor.slug].state}`}>
+                                <span className="leave-badge">{leaveLabel(leaves[doctor.slug])}</span> <span className="small">{leaveSentence(doctor.name, leaves[doctor.slug])}</span>
+                              </div>
+                            ) : null}
                           </div>
                         </div>
                         <div className="sessions">
