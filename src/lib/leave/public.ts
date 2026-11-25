@@ -1,3 +1,4 @@
+import { safeErrorText } from "../db/config";
 import { getLeaveStore } from "../db/stores";
 import { todayInKarachi } from "./dates";
 import { computePublicNotices } from "./service";
@@ -16,7 +17,7 @@ export async function getPublicLeaveNotices(now: Date = new Date()): Promise<Rec
     const today = todayInKarachi(now);
     return computePublicNotices(await store.listCurrentAndUpcoming(today), today);
   } catch (e) {
-    console.error("[leave] public leave notices unavailable:", e instanceof Error ? e.message : e);
+    console.error("[leave] public leave notices unavailable:", safeErrorText(e));
     return {};
   }
 }

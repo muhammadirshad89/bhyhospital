@@ -1,44 +1,35 @@
 /**
- * Applies the SQL files in db/migrations to the database in DATABASE_URL, in file-name order, once each.
- * Usage:  DATABASE_URL="postgres://..." npm run db:migrate
- * (You can also paste the SQL file into your database's SQL editor; both give the same result.)
+ * Applies the SQL files in db/migrations to the database, in file-name order, once each.
+ * Uses the DIRECT connection (host db.prisma.io); it refuses to run through the pooled one.
+ *
+ *   npm run db:migrate                 apply pending migrations
+ *   npm run db:migrate -- --list       only list the migration files (does not connect to any database)
+ *
+ * Connection strings are read from the environment (or from .env.local / .env if present, e.g. after `vercel env pull .env.local`).
+ * Only the variable name, "direct" and the host name are printed, never a password or a connection string.
  */
-import { readdirSync, readFileSync } from "node:fs";
 import { join } from "node:path";
-import { isDatabaseConfigured, query } from "../src/lib/db/client";
-
-function statements(sql: string): string[] {
-  const cleaned = sql
-    .split("\n")
-    .filter((line) => !line.trim().startsWith("--"))
-    .join("\n");
-  return cleaned
-    .split(/;\s*(?:\n|$)/)
-    .map((s) => s.trim())
-    .filter(Boolean);
-}
+import { closeDatabase, connectionInfo, DatabaseConfigError, safeErrorText, useDirectConnection, withClient } from "../src/lib/db/client";
+import { loadLocalEnv } from "./local-env";
+import { applyMigrations, readMigrations } from "./migrate-lib";
 
 async function main() {
-  if (!isDatabaseConfigured()) {
-    console.error("DATABASE_URL is not set. Export it first, then run this command again.");
-    process.exit(1);
+  const files = readMigrations(join(process.cwd(), "db", "migrations"));
+  if (process.argv.includes("--list")) {
+    for (const f of files) console.log(`${f.name}  (checksum ${f.checksum})`);
+    return;
   }
-  await query(`CREATE TABLE IF NOT EXISTS schema_migrations (name text PRIMARY KEY, applied_at timestamptz NOT NULL DEFAULT now())`);
-  const dir = join(process.cwd(), "db", "migrations");
-  const files = readdirSync(dir).filter((f) => f.endsWith(".sql")).sort();
-  for (const file of files) {
-    const done = await query<{ name: string }>(`SELECT name FROM schema_migrations WHERE name = $1`, [file]);
-    if (done.length) {
-      console.log(`skip   ${file} (already applied)`);
-      continue;
-    }
-    for (const stmt of statements(readFileSync(join(dir, file), "utf8"))) await query(stmt);
-    await query(`INSERT INTO schema_migrations (name) VALUES ($1)`, [file]);
-    console.log(`applied ${file}`);
-  }
+  loadLocalEnv();
+  useDirectConnection();
+  const info = connectionInfo("direct");
+  console.log(`Connecting with ${info.source} (${info.kind} connection) to ${info.host}, SSL ${info.ssl ? "on" : "off"}.`);
+  const report = await withClient((client) => applyMigrations(client, files, (line) => console.log(line)));
+  console.log(`Done: ${report.applied.length} applied, ${report.skipped.length} already applied.`);
 }
 
-main().catch((e) => {
-  console.error("Migration failed:", e instanceof Error ? e.message : e);
-  process.exit(1);
-});
+main()
+  .catch((e) => {
+    console.error(e instanceof DatabaseConfigError ? e.message : `Migration failed and was rolled back. ${safeErrorText(e)}`);
+    process.exitCode = 1;
+  })
+  .finally(() => closeDatabase());

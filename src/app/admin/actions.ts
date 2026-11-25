@@ -6,6 +6,7 @@ import { redirect } from "next/navigation";
 import { signIn, signOut } from "@/lib/admin/auth";
 import { SESSION_COOKIE, SESSION_COOKIE_PATH, SESSION_TTL_SECONDS } from "@/lib/admin/constants";
 import { requireAdmin } from "@/lib/admin/session";
+import { safeErrorText } from "@/lib/db/config";
 import { getAdminStore, getLeaveStore } from "@/lib/db/stores";
 import { todayInKarachi, formatLeavePeriod } from "@/lib/leave/dates";
 import { cancelLeave, createLeave, LeaveError, updateLeave } from "@/lib/leave/service";
@@ -23,7 +24,7 @@ function refreshPublicSite() {
 
 function failure(e: unknown): ActionState {
   if (e instanceof LeaveError) return { status: "error", message: e.message, fieldErrors: e.fieldErrors as Record<string, string> };
-  console.error("[admin] leave action failed:", e instanceof Error ? e.message : e);
+  console.error("[admin] leave action failed:", safeErrorText(e));
   return { status: "error", message: "Something went wrong and nothing was changed. Please try again." };
 }
 
@@ -35,7 +36,13 @@ async function directory() {
 export async function loginAction(_prev: ActionState, formData: FormData): Promise<ActionState> {
   const store = getAdminStore();
   if (!store) return NO_DATABASE;
-  const result = await signIn(store, text(formData, "email"), text(formData, "password"));
+  let result;
+  try {
+    result = await signIn(store, text(formData, "email"), text(formData, "password"));
+  } catch (e) {
+    console.error("[admin] sign-in could not reach the database:", safeErrorText(e));
+    return { status: "error", message: "Sign-in is temporarily unavailable because the database cannot be reached. Please try again in a few minutes." };
+  }
   if (!result.ok) return { status: "error", message: result.message };
   (await cookies()).set({
     name: SESSION_COOKIE,

@@ -1,7 +1,9 @@
 /**
  * Creates (or you can run it again to add more) an administrator account.
  *
- *   DATABASE_URL="postgres://..." npm run admin:create -- --email you@example.com --name "Your Name"
+ *   npm run admin:create -- --email you@example.com --name "Your Name"
+ *
+ * Uses the DIRECT database connection (db.prisma.io), read from the environment or from .env.local (see docs/ADMIN-SETUP.md).
  *
  * The password is typed at a hidden prompt (or read from the ADMIN_PASSWORD environment variable for non-interactive use).
  * It is hashed with scrypt before it is stored; the plain password is never saved or printed.
@@ -9,7 +11,8 @@
 import { isPlausibleEmail, normalizeEmail, validateNewPassword } from "../src/lib/admin/auth";
 import { hashPassword } from "../src/lib/admin/password";
 import { PostgresAdminStore } from "../src/lib/admin/postgres-store";
-import { isDatabaseConfigured } from "../src/lib/db/client";
+import { closeDatabase, connectionInfo, DatabaseConfigError, errorCode, safeErrorText, useDirectConnection } from "../src/lib/db/client";
+import { loadLocalEnv } from "./local-env";
 
 function arg(name: string): string | undefined {
   const i = process.argv.indexOf(`--${name}`);
@@ -44,10 +47,10 @@ function askHidden(prompt: string): Promise<string> {
 }
 
 async function main() {
-  if (!isDatabaseConfigured()) {
-    console.error("DATABASE_URL is not set. Export it first, then run this command again.");
-    process.exit(1);
-  }
+  loadLocalEnv();
+  useDirectConnection();
+  const info = connectionInfo("direct"); // throws a safe message if there is no direct connection
+  console.log(`Using ${info.source} (${info.kind} connection) to ${info.host}.`);
   const email = normalizeEmail(arg("email") ?? "");
   const name = (arg("name") ?? "").trim();
   if (!isPlausibleEmail(email) || !name) {
@@ -71,8 +74,11 @@ async function main() {
   console.log(`Administrator created: ${admin.displayName} <${admin.email}>`);
 }
 
-main().catch((e) => {
-  const msg = e instanceof Error ? e.message : String(e);
-  console.error(/admin_users_email_key|duplicate key/i.test(msg) ? "An administrator with this email already exists." : `Failed: ${msg}`);
-  process.exit(1);
-});
+main()
+  .catch((e) => {
+    if (e instanceof DatabaseConfigError) console.error(e.message);
+    else if (errorCode(e) === "23505") console.error("An administrator with this email already exists.");
+    else console.error(`Failed. ${safeErrorText(e)}`);
+    process.exitCode = 1;
+  })
+  .finally(() => closeDatabase());

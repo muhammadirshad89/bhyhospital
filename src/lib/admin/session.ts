@@ -5,6 +5,7 @@
 import { cache } from "react";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { safeErrorText } from "../db/config";
 import { getAdminStore } from "../db/stores";
 import type { AdminActor } from "../leave/types";
 import { adminForToken } from "./auth";
@@ -15,8 +16,14 @@ export const getAdminSession = cache(async (): Promise<AdminActor | null> => {
   const store = getAdminStore();
   if (!store) return null;
   const token = (await cookies()).get(SESSION_COOKIE)?.value;
-  const admin = await adminForToken(store, token);
-  return admin ? { id: admin.id, email: admin.email, name: admin.displayName } : null;
+  try {
+    const admin = await adminForToken(store, token);
+    return admin ? { id: admin.id, email: admin.email, name: admin.displayName } : null;
+  } catch (e) {
+    // If the database cannot be reached, nobody is treated as signed in (fail closed). Only a safe summary is logged.
+    console.error("[admin] session check failed:", safeErrorText(e));
+    return null;
+  }
 });
 
 /** Returns the signed-in administrator, or sends the visitor to the sign-in page. */

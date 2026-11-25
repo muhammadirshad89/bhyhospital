@@ -70,7 +70,7 @@ describe("admin access control (structure)", () => {
     for (const f of walk("src").filter((x) => /\.(ts|tsx)$/.test(x))) assert.ok(!/localStorage|sessionStorage|indexedDB/.test(read(f)), f);
   });
   it("no secrets or credentials are written into the source", () => {
-    const hits = walk("src").concat(walk("scripts"), walk("db")).filter((f) => /postgres(ql)?:\/\/[^\s"'`$]+:[^\s"'`$]+@/i.test(read(f)) || /\b(password|secret|token|api_?key)\w*\s*[:=]\s*["'][A-Za-z0-9\/+_.-]{8,}["']/i.test(read(f)));
+    const hits = walk("src").concat(walk("scripts"), walk("db")).filter((f) => /postgres(ql)?:\/\/(?!USER:PASSWORD@)[^\s"'`$]+:[^\s"'`$]+@/i.test(read(f)) || /\b(password|secret|token|api_?key)\w*\s*[:=]\s*["'][A-Za-z0-9\/+_.-]{8,}["']/i.test(read(f)));
     assert.deepEqual(hits, []);
     assert.ok(!fs.existsSync(path.join(root, ".env")) && !fs.existsSync(path.join(root, ".env.local")));
     assert.ok(/DATABASE_URL=\s*$/m.test(read(".env.example")));

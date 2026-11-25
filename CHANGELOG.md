@@ -1,5 +1,27 @@
 # Changelog
 
+## Database driver: Prisma Postgres compatibility (node-postgres)
+
+Replaces the previous provider-specific serverless driver with the standard PostgreSQL driver `pg`. No Prisma ORM. No schema change: `db/migrations/001_doctor_leave_management.sql` and all SQL in the stores are unchanged.
+
+### Modified
+- `package.json`: removed the old serverless driver; added `pg` (dependency) and `@types/pg` (dev). Run `npm install` to update `package-lock.json`.
+- `src/lib/db/client.ts`: rewritten on `pg`: one lazily created, race-free, globalThis-cached pool; explicit connection fields (no connection string, so SSL mode cannot be misread); `query`, `withClient` (single connection for transactions), `useDirectConnection`, `closeDatabase`; the driver is loaded lazily.
+- `scripts/migrate.ts`: uses the DIRECT connection; each migration file runs in one transaction with its bookkeeping row (rolled back on failure), under an advisory lock; new `--list` option that does not connect.
+- `scripts/create-admin.ts`: uses the DIRECT connection; duplicate email detected by SQLSTATE 23505; prints no secrets.
+- `src/app/admin/actions.ts`: sign-in shows a safe "temporarily unavailable" message if the database cannot be reached; logs use a safe summary.
+- `src/lib/admin/session.ts`: if the database cannot be reached nobody is treated as signed in (fail closed).
+- `src/lib/leave/public.ts`: logs a safe summary instead of the raw driver message.
+- `.env.example`, `docs/ADMIN-SETUP.md`: Prisma Postgres variables, pooled/direct rules and exact setup commands.
+- `tests/admin-structure.test.ts`: the credential scanner ignores the literal USER:PASSWORD placeholder.
+
+### New
+- `src/lib/db/config.ts`: pure configuration logic: hostname-based pooled/direct detection, variable priority, SSL rules, pool sizing, safe descriptions and error text.
+- `scripts/migrate-lib.ts`, `scripts/local-env.ts`: migration logic (testable) and an optional `.env.local` loader.
+- `tests/db-config.test.ts`, `tests/db-client.test.ts`: configuration, connection selection, SSL, secret-safety, pool creation (with a fake driver), migrations and error-handling tests.
+
+---
+
 ## BHY Hospital chatbot installed; previous third-party chat widget removed
 
 Built on the Admin Panel / WhatsApp delivery.
@@ -36,7 +58,7 @@ Built on the Admin Panel / WhatsApp delivery.
 
 - `.env.example`: Documents the new DATABASE_URL setting (no value).
 - `next.config.mjs`: Added no-store + noindex headers for /admin/*. Existing headers unchanged.
-- `package.json`: Added dependency @neondatabase/serverless and scripts db:migrate, admin:create.
+- `package.json`: Added the database driver dependency and scripts db:migrate, admin:create.
 - `src/app/departments/[slug]/page.tsx`: Reads public leave notices; passes them to doctor cards; page re-generated every 60 s.
 - `src/app/doctors/[slug]/page.tsx`: Shows the leave banner on the profile and leave status on colleague cards; re-generated every 60 s.
 - `src/app/doctors/page.tsx`: Passes leave notices to the doctor directory.
